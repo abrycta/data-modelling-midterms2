@@ -35,6 +35,7 @@ public class Simulator {
                 parts.setArrivalTimeInService();
             }
         }
+        
         public int calculateTime() {
 
         }
