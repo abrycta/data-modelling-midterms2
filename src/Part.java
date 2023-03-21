@@ -6,7 +6,7 @@ public class Part {
 
     public Part(int id, double arrivalTime, double interArrivalTime, double serviceTime) {
         this.id = id;
-        this. arrivalTime = arrivalTime;
+        this.arrivalTime = arrivalTime;
         this.interArrivalTime = interArrivalTime;
         this.serviceTime = serviceTime;
     }
