@@ -6,14 +6,14 @@ public class Simulator {
      * @param numberOfMinutes = number of minutes where the simulation will terminate
      * @return arrayList of parts
      */
-    public ArrayList<Parts> simulateMinutes(int numberOfMinutes) {
-        ArrayList<Parts> partsArrayList = new ArrayList<>();
+    public ArrayList<Part> simulateMinutes(int numberOfMinutes) {
+        ArrayList<Part> partsArrayList = new ArrayList<>();
         int currentTime = 0;
 
         //  Simulate the specified number of minutes
         while (currentTime < numberOfMinutes) {
             // Create a new customer object
-            Parts parts = new Parts();
+            Part parts = new Part();
             // Set customer ID
             parts.setEntityNum(partsArrayList.size() + 1);
 
