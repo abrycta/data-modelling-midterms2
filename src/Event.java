@@ -1,13 +1,16 @@
+import java.util.ArrayList;
+
 public class Event {
     private int eventID;
     private double time;
     private int eventType;
-    private double timeInQueue;
-    private double numberOfPartsInQueue;    // number of parts in queue at time t
+    private ArrayList<Double> timesInQueue;
+    private int numberOfPartsInQueue;    // number of parts in queue at time t
     private int utilization; // 1 if the machine is busy at time t
                      // 0 if machine is available
     private double partArrivalTime; // attributes (arrival times)
     private double serviceTime;     // service time of part
+    private double partInServiceTime; // In service attribute
 
     // statistical accumulators
     private int partsProducedSoFar; // p
@@ -49,19 +52,27 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public double getTimeInQueue() {
-        return timeInQueue;
+    public ArrayList<Double> getTimesInQueue() {
+        return timesInQueue;
     }
 
-    public void setTimeInQueue(double timeInQueue) {
-        this.timeInQueue = timeInQueue;
+    public void setTimesInQueue(ArrayList<Double> timesInQueue) {
+        this.timesInQueue = timesInQueue;
     }
 
-    public double getNumberOfPartsInQueue() {
+    public double getPartInServiceTime() {
+        return partInServiceTime;
+    }
+
+    public void setPartInServiceTime(double partInServiceTime) {
+        this.partInServiceTime = partInServiceTime;
+    }
+
+    public int getNumberOfPartsInQueue() {
         return numberOfPartsInQueue;
     }
 
-    public void setNumberOfPartsInQueue(double numberOfPartsInQueue) {
+    public void setNumberOfPartsInQueue(int numberOfPartsInQueue) {
         this.numberOfPartsInQueue = numberOfPartsInQueue;
     }
 
