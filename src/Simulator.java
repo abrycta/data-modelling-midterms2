@@ -14,6 +14,7 @@ public class Simulator {
         ArrayList<Integer> eventIdsDeparted = new ArrayList<>();
         ArrayList<Integer> eventIdsPassedQueue = new ArrayList<>();
         int currentTime = 0;
+        ArrayList<Part> partArrayList = new ArrayList<>();
 
         //  Simulate the specified number of minutes
         while (currentTime < numberOfMinutes) {
@@ -107,32 +108,34 @@ public class Simulator {
 
     // returns prev event times in queue
     public ArrayList<Double> getPrevTimesInQueue(ArrayList<Event> eventArrayList) {
-        ArrayList<Double> timesInQueue = new ArrayList<>();
+        ArrayList<Double> timesInQueue = eventArrayList.get(eventArrayList.size()-1).getTimesInQueue();
         return timesInQueue;
     }
 
     // returns prev part in service time
     public double getPrevPartInServiceTime(ArrayList<Event> eventArrayList) {
-        double partInServiceTime = 0;
+        double partInServiceTime = eventArrayList.get(eventArrayList.size()-1).getPartInServiceTime();
         return partInServiceTime;
     }
 
     public double getPrevWaitingTimeQueueSoFar(ArrayList<Event> eventArrayList) {
-        int waitingTimeQueueSoFar = 0;
+        double waitingTimeQueueSoFar = eventArrayList.get(eventArrayList.size()-1).getWaitingTimeInQueueSoFar();
         return waitingTimeQueueSoFar;
     }
 
     public double getPrevSigmaTS(ArrayList<Event> eventArrayList) {
-        double sigmaTS = 0;
+        double sigmaTS = eventArrayList.get(eventArrayList.size()-1).getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
         return sigmaTS;
     }
 
     public double getPrevWQ(ArrayList<Event> eventArrayList) {
-        return 0;
+        double prevWQ = eventArrayList.get(eventArrayList.size()-1).getLongestTimeSpentInQueueSoFar();
+        return prevWQ;
     }
 
     public double getPrevTS(ArrayList<Event> eventArrayList) {
-        return 0;
+        double prevTS = eventArrayList.get(eventArrayList.size()-1).getLongestTimeInSystem();
+        return prevTS;
     }
 
     // Returns the eventID
