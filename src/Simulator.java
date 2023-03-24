@@ -58,7 +58,7 @@ public class Simulator {
                     if(event.getEventID() == 1){
                         eventIdsPassedQueue.add(event.getEventID());
                     }
-                } else if (event.getEventType() == 0){
+                } else if (event.getEventType() == 2){
                     eventIDsInQueue.remove(event.getEventID());
                     eventIdsDeparted.add(event.getEventID());
                     eventIdsPassedQueue.add(event.getEventID());
@@ -77,8 +77,7 @@ public class Simulator {
 
                 event.setTimesInQueue(calculateTimesInQueue(eventIDsInQueue, eventArrayList));
 
-                event.setPartInServiceTime(calculatePartInServiceTime(event.getEventType(),
-                        eventIDsInQueue, eventArrayList));
+                event.setPartInServiceTime(calculatePartInServiceTime(eventIDsInQueue, eventArrayList));
 
                 // Statistical Accumulators
                 event.setPartsProducedSoFar(eventIdsDeparted.size()); // P
@@ -161,7 +160,7 @@ public class Simulator {
 
     // removes queue if event is departure and adds queue if arrival
     // keep the index of the event id and queue same to its queue
-    // subtact 1 to the total events in Queue (will return empty arraylist if eventIDs in Queue is 1)
+    // subtract 1 to the total events in Queue (will return empty arraylist if eventIDs in Queue is 1)
     public ArrayList<Double> calculateTimesInQueue(ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
         ArrayList<Double> timesInQueue = new ArrayList<>();
         for (int eventId: eventIDsInQueue){
@@ -177,9 +176,17 @@ public class Simulator {
 
     // returns the service time of the event in front of the queue
     // retain value if event is arrival
-    public double calculatePartInServiceTime(double partInServiceTime,
-                                             ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
+    public double calculatePartInServiceTime( ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
         double serviceTime = 0;
+        for (int eventId: eventIDsInQueue){
+            if (eventId == 1) {
+                continue;
+            }if (eventId == 2) {
+                for (Event event: eventArrayList){
+                    serviceTime = event.getPartInServiceTime();
+                }
+            }
+        }
         return serviceTime;
     }
 
