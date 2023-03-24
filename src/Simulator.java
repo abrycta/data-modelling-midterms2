@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.*;
+import java.util.Collections;
 
 public class Simulator {
 
@@ -110,34 +109,28 @@ public class Simulator {
 
     // returns prev event times in queue
     public ArrayList<Double> getPrevTimesInQueue(ArrayList<Event> eventArrayList) {
-        ArrayList<Double> timesInQueue = eventArrayList.get(eventArrayList.size()-1).getTimesInQueue();
-        return timesInQueue;
+        return eventArrayList.get(eventArrayList.size()-1).getTimesInQueue();
     }
 
     // returns prev part in service time
     public double getPrevPartInServiceTime(ArrayList<Event> eventArrayList) {
-        double partInServiceTime = eventArrayList.get(eventArrayList.size()-1).getPartInServiceTime();
-        return partInServiceTime;
+        return eventArrayList.get(eventArrayList.size()-1).getPartInServiceTime();
     }
 
     public double getPrevWaitingTimeQueueSoFar(ArrayList<Event> eventArrayList) {
-        double waitingTimeQueueSoFar = eventArrayList.get(eventArrayList.size()-1).getWaitingTimeInQueueSoFar();
-        return waitingTimeQueueSoFar;
+        return eventArrayList.get(eventArrayList.size()-1).getWaitingTimeInQueueSoFar();
     }
 
     public double getPrevSigmaTS(ArrayList<Event> eventArrayList) {
-        double sigmaTS = eventArrayList.get(eventArrayList.size()-1).getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
-        return sigmaTS;
+        return eventArrayList.get(eventArrayList.size()-1).getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
     }
 
     public double getPrevWQ(ArrayList<Event> eventArrayList) {
-        double prevWQ = eventArrayList.get(eventArrayList.size()-1).getLongestTimeSpentInQueueSoFar();
-        return prevWQ;
+        return eventArrayList.get(eventArrayList.size()-1).getLongestTimeSpentInQueueSoFar();
     }
 
     public double getPrevTS(ArrayList<Event> eventArrayList) {
-        double prevTS = eventArrayList.get(eventArrayList.size()-1).getLongestTimeInSystem();
-        return prevTS;
+        return eventArrayList.get(eventArrayList.size()-1).getLongestTimeInSystem();
     }
 
     // Returns the eventID
@@ -179,12 +172,11 @@ public class Simulator {
     public double calculatePartInServiceTime( ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
         double serviceTime = 0;
         for (int eventId: eventIDsInQueue){
-            if (eventId == 1) {
+            if (eventId == eventIDsInQueue.get(0)) {
                 continue;
-            }if (eventId == 2) {
-                for (Event event: eventArrayList){
-                    serviceTime = event.getPartInServiceTime();
-                }
+            }
+            for (Event event: eventArrayList){
+                serviceTime = event.getPartInServiceTime();
             }
         }
         return serviceTime;
@@ -208,32 +200,36 @@ public class Simulator {
 
     // retain values if event type is arrival
     // WQ*
-    public double calculateLongestTimeSpentInQueueSoFar(double partInServiceTime,
-                                                        double eventTime, int eventType, double prevWQ) {
+    public double calculateLongestTimeSpentInQueueSoFar(double partInServiceTime, double eventTime, int eventType, double prevWQ) {
         double longestTimeSpentInQueueSoFar = 0;
-
+        if(eventType == 2){
+            longestTimeSpentInQueueSoFar = eventTime - partInServiceTime;
+        }
+        if(longestTimeSpentInQueueSoFar < prevWQ){
+            longestTimeSpentInQueueSoFar = prevWQ;
+        }
         return longestTimeSpentInQueueSoFar;
     }
 
     // retain values f event is arrival
     // sigma WQ
     public double calculateWaitingTimeInQueueSoFar(int eventType, double prevWaitingTimeInQueueSoFar, double WQ) {
-        double waitingTimeInQueueSoFar = 0;
-        return waitingTimeInQueueSoFar;
+        if (eventType == 2){
+            WQ += prevWaitingTimeInQueueSoFar;
+        }
+        return WQ;
     }
 
     // retain values if event type is arrival
     // TS*
-    public double calculateLongestTimeInSystem(int eventType, int eventID, ArrayList<Event> eventArrayList,
-                                               double prevTS) {
+    public double calculateLongestTimeInSystem(int eventType, int eventID, ArrayList<Event> eventArrayList, double prevTS) {
         double longestTimeInSystem = 0;
         return longestTimeInSystem;
     }
 
     // retain values if event is arrival
     // sigma TS
-    public double calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(int eventType, int eventID,
-                                                                            double prevSigmaTS, double TS) {
+    public double calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(int eventType, int eventID, double prevSigmaTS, double TS) {
         double totalTimeSpentInSystemByAllPartsThatHaveDeparted = 0;
         return totalTimeSpentInSystemByAllPartsThatHaveDeparted;
     }
