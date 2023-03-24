@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.*;
+
 public class Simulator {
 
     /**
@@ -161,6 +164,14 @@ public class Simulator {
     // subtact 1 to the total events in Queue (will return empty arraylist if eventIDs in Queue is 1)
     public ArrayList<Double> calculateTimesInQueue(ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
         ArrayList<Double> timesInQueue = new ArrayList<>();
+        for (int eventId: eventIDsInQueue){
+            if (eventId == eventIDsInQueue.get(0))
+                continue;
+            for (Event event: eventArrayList) {
+                timesInQueue.add(event.getPartArrivalTime());
+            }
+        }
+        Collections.reverse(timesInQueue);
         return timesInQueue;
     }
 
@@ -193,6 +204,7 @@ public class Simulator {
     public double calculateLongestTimeSpentInQueueSoFar(double partInServiceTime,
                                                         double eventTime, int eventType, double prevWQ) {
         double longestTimeSpentInQueueSoFar = 0;
+
         return longestTimeSpentInQueueSoFar;
     }
 
