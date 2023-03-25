@@ -205,7 +205,7 @@ public class Simulator {
         if(eventType == 2){
             longestTimeSpentInQueueSoFar = eventTime - partInServiceTime;
         }
-        if(longestTimeSpentInQueueSoFar < prevWQ){
+        if(eventType == 1){
             longestTimeSpentInQueueSoFar = prevWQ;
         }
         return longestTimeSpentInQueueSoFar;
