@@ -217,6 +217,9 @@ public class Simulator {
         if (eventType == 2){
             WQ += prevWaitingTimeInQueueSoFar;
         }
+        if (eventType == 1){
+            WQ = prevWaitingTimeInQueueSoFar;
+        }
         return WQ;
     }
 
