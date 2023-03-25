@@ -169,7 +169,7 @@ public class Simulator {
 
     // returns the service time of the event in front of the queue
     // retain value if event is arrival
-    public double calculatePartInServiceTime( ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
+    public double calculatePartInServiceTime(ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
         double serviceTime = 0;
         for (int eventId: eventIDsInQueue){
             if (eventId == eventIDsInQueue.get(0)) {
@@ -250,5 +250,46 @@ public class Simulator {
     public double calculateAreaUnderServerBusy(double areaUnderServerBusy) {
         return areaUnderServerBusy;
     }
+
+
+    // Kurt methods
+
+    public Part getPrevPart(ArrayList<Part> parts) {
+        return parts.get(parts.size() -1);
+    }
+    public ArrayList<Part> simulateParts (int minutes) {
+        ArrayList<Part> parts = new ArrayList<>();
+        Part part = new Part(1, 0, 0, 0);
+        double currentArrivalTime = 0;
+        int currentEntityID = 0;
+        double simulationTime = 0;
+
+        while(simulationTime < minutes) {
+            // case first part in queue, arrival time is at 0
+            if (part.getId() == 1) {
+                part.setServiceTime(Randomizer.lookUpServiceTime());
+                currentEntityID++;
+            }
+            // parts 2 and beyond
+            else {
+                currentArrivalTime = parts.get(parts.size() - 1).getArrivalTime();
+                // add the interarrival time of the new part
+                // and the arrival time of the previous part
+                int currentInterArrivalTime = Randomizer.lookupInterArrivalTime();
+                parts.add(new Part(
+                        getPrevPart(parts).getId() + 1,
+                        getPrevPart(parts).getArrivalTime() + currentInterArrivalTime,
+                        currentInterArrivalTime,
+                        Randomizer.lookUpServiceTime()
+
+                ));
+            }
+            simulationTime = parts.get(parts.size() - 1).getArrivalTime();
+        }
+        return parts;
+    }
+
+
+
 
 }

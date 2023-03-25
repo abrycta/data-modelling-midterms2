@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 public class Event {
-    private int eventID;
+    private int eventID;        // determines the sequence of events
+
+    private int entityNumber;   // what part is the event referring to?
     private double time;
     private int eventType;
     private ArrayList<Double> timesInQueue;
@@ -170,5 +172,13 @@ public class Event {
 
     public void setAreaUnderServerBusy(double areaUnderServerBusy) {
         this.areaUnderServerBusy = areaUnderServerBusy;
+    }
+
+    public int getEntityNumber() {
+        return entityNumber;
+    }
+
+    public void setEntityNumber(int entityNumber) {
+        this.entityNumber = entityNumber;
     }
 }

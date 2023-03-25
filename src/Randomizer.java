@@ -13,7 +13,7 @@ public class Randomizer {
      *
      * @return random number ranging from 1-8, with each having 0.125 probability.
      */
-    public static int lookUpArrival() {
+    public static int lookupInterArrivalTime() {
         HashMap<Integer, Double> arrivalDistribution = new HashMap<>();
         arrivalDistribution.put(1, 0.125);
         arrivalDistribution.put(2, 0.125);
@@ -32,7 +32,7 @@ public class Randomizer {
      * @return random number between 1-5 based on the probabilities
      * specified in the given hashmap.
      */
-    public static int lookUpService() {
+    public static int lookUpServiceTime() {
         HashMap<Integer, Double> serviceDistribution = new HashMap<>();
         serviceDistribution.put(1, 0.15);
         serviceDistribution.put(2, 0.30);
