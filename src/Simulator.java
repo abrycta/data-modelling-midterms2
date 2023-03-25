@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Simulator {
 
@@ -16,7 +18,7 @@ public class Simulator {
         ArrayList<Integer> eventIdsDeparted = new ArrayList<>();
         ArrayList<Integer> eventIdsPassedQueue = new ArrayList<>();
         int currentTime = 0;
-        ArrayList<Part> partArrayList = new ArrayList<>();
+        ArrayList<Part> parts = simulateParts(numberOfMinutes);
 
         //  Simulate the specified number of minutes
         while (currentTime < numberOfMinutes) {
@@ -46,8 +48,7 @@ public class Simulator {
             } else {
                 event.setEventID(calculateEventID(eventArrayList));
 
-                event.setTime(calculateTime(getPrevTimesInQueue(eventArrayList),
-                        getPrevPartInServiceTime(eventArrayList)));
+                event.setTime(calculateTime(parts, eventArrayList));
 
                 event.setEventType(getEventType()); // 0 = Initialize, 1 = Arrival, 2 = Departure
 
@@ -139,10 +140,58 @@ public class Simulator {
         return eventID;
     }
 
+    public double calculateTime(ArrayList<Part> parts, ArrayList<Event> events) {
+        // set time of arrival event of entity 1 to 0
+        if (getPrevEvent(events).getEventType() == 0) return 0;
+        return constructCalendar(parts, events).get(events.size()-1).getTime();
+    }
+
     //
-    public double calculateTime(ArrayList<Double> prevTimesInQueue, double prevPartInServiceTime) {
-        double time =0;
-        return time;
+    public ArrayList<Event> constructCalendar(ArrayList<Part> parts, ArrayList<Event> events) {
+
+        ArrayList<Event> calendar = new ArrayList<>();
+        Event eventInService = new Event();
+
+        // construct a list of events consisting of arrival times
+        // reminder, indices are 0-based
+        ArrayList<Event> arrivalEvents = new ArrayList<>();
+        for (Part part : parts) {
+            Event event = new Event();
+            event.setTime(part.getArrivalTime());
+            event.setEntityNumber(part.getId());
+            arrivalEvents.add(event);
+            calendar.add(event);
+        }
+
+        // construct a list of events consisting of departure times
+        ArrayList<Event> departureEvents = new ArrayList<>();
+        for (Part part : parts) {
+            Event departure = new Event();
+
+            // case part 1
+            if (part.getId() == 1) {
+                departure.setTime(part.getServiceTime());
+                eventInService = departure;
+                departureEvents.add(departure);
+                calendar.add(eventInService);
+                // systemTime += part.getServiceTime();
+            } else {
+                departure.setTime(
+                        eventInService.getTime() + part.getServiceTime()
+                );
+                eventInService = departure;
+                departureEvents.add(departure);
+                calendar.add(eventInService);
+            }
+        }
+
+        // sort list by time
+        calendar.sort(Comparator.comparing(Event::getTime));
+
+        // calendar is the superlist, containing the entire calendar
+        // get the time of the calendar entry that matches with
+        // the index of the event list
+        return calendar;
     }
 
     public int getEventType() {
@@ -251,28 +300,25 @@ public class Simulator {
         return areaUnderServerBusy;
     }
 
-
-    // Kurt methods
-
     public Part getPrevPart(ArrayList<Part> parts) {
         return parts.get(parts.size() -1);
+    }
+
+    public Event getPrevEvent(ArrayList<Event> events) {
+        return events.get(events.size() - 1);
     }
     public ArrayList<Part> simulateParts (int minutes) {
         ArrayList<Part> parts = new ArrayList<>();
         Part part = new Part(1, 0, 0, 0);
-        double currentArrivalTime = 0;
-        int currentEntityID = 0;
         double simulationTime = 0;
 
         while(simulationTime < minutes) {
             // case first part in queue, arrival time is at 0
             if (part.getId() == 1) {
                 part.setServiceTime(Randomizer.lookUpServiceTime());
-                currentEntityID++;
             }
             // parts 2 and beyond
             else {
-                currentArrivalTime = parts.get(parts.size() - 1).getArrivalTime();
                 // add the interarrival time of the new part
                 // and the arrival time of the previous part
                 int currentInterArrivalTime = Randomizer.lookupInterArrivalTime();
