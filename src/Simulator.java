@@ -135,9 +135,9 @@ public class Simulator {
     }
 
     // Returns the eventID
-    public int calculateEventID(ArrayList<Event> eventArrayList) {
-        int eventID = 0;
-        return eventID;
+    public int calculateEventID(ArrayList<Part> parts, ArrayList<Event> events) {
+        // set time of arrival event of entity 1 to 0
+        return constructCalendar(parts, events).get(events.size()-1).getEntityNumber();
     }
 
     public double calculateTime(ArrayList<Part> parts, ArrayList<Event> events) {
@@ -145,6 +145,12 @@ public class Simulator {
         if (getPrevEvent(events).getEventType() == 0) return 0;
         return constructCalendar(parts, events).get(events.size()-1).getTime();
     }
+
+    public int getEventType(ArrayList<Part> parts, ArrayList<Event> events) {
+        if (getPrevEvent(events).getEventType() == 0) return 1;
+        return constructCalendar(parts, events).get(events.size()-1).getEventType();
+    }
+
 
     //
     public ArrayList<Event> constructCalendar(ArrayList<Part> parts, ArrayList<Event> events) {
@@ -192,11 +198,6 @@ public class Simulator {
         // get the time of the calendar entry that matches with
         // the index of the event list
         return calendar;
-    }
-
-    public int getEventType() {
-        int eventType =0;
-        return eventType;
     }
 
 
