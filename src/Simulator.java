@@ -214,13 +214,14 @@ public class Simulator {
     // retain values f event is arrival
     // sigma WQ
     public double calculateWaitingTimeInQueueSoFar(int eventType, double prevWaitingTimeInQueueSoFar, double WQ) {
+        double waitingTimeInQueueSoFar = 0;
         if (eventType == 2){
-            WQ += prevWaitingTimeInQueueSoFar;
+            waitingTimeInQueueSoFar = WQ + prevWaitingTimeInQueueSoFar;
         }
         if (eventType == 1){
-            WQ = prevWaitingTimeInQueueSoFar;
+            waitingTimeInQueueSoFar = prevWaitingTimeInQueueSoFar;
         }
-        return WQ;
+        return waitingTimeInQueueSoFar;
     }
 
     // retain values if event type is arrival
