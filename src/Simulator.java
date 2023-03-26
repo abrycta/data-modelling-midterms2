@@ -387,7 +387,9 @@ public class Simulator {
 
                 ));
             }
-            simulationTime = parts.get(parts.size() - 1).getArrivalTime();
+            if (!parts.isEmpty()) {
+                simulationTime = parts.get(parts.size() - 1).getArrivalTime();
+            }
         }
         return parts;
     }
