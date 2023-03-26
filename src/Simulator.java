@@ -376,6 +376,38 @@ public class Simulator {
         return areaUnderServerBusy;
     }
 
+    /*
+            FOR STATISTICS
+     */
+    public double averageTotalTimeInSystem(ArrayList<Event> eventArrayList) {
+        Event e = eventArrayList.get(eventArrayList.size()-1);
+        double totalTime = e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
+        double totalPart = e.getPartsProducedSoFar();
+        return totalTime/totalPart; // time per part
+    }
+
+    public double averageWaitingTimeInQueue(ArrayList<Event> eventArrayList) {
+        Event e = eventArrayList.get(eventArrayList.size()-1);
+        double totalTime = e.getWaitingTimeInQueueSoFar();
+        double totalParts = e.getNumberOfPartsThatPassedThroughTheQueueSoFar();
+        return totalTime/totalParts; // time per part
+    }
+
+    public double timeAverageNumberInQueue(ArrayList<Event> eventArrayList) {
+        Event e = eventArrayList.get(eventArrayList.size()-1);
+        double areaUnderQ = e.getAreaUnderQueueLengthCurve();
+        double finalClockValue = e.getTime();
+        return areaUnderQ/finalClockValue; // time per part
+    }
+
+    public double drillPressUtilization(ArrayList<Event> eventArrayList) {
+        Event e = eventArrayList.get(eventArrayList.size() - 1);
+        double areaUnderB = e.getAreaUnderServerBusy();
+        double finalClockValue = e.getTime();
+        return areaUnderB/finalClockValue; // per minute
+    }
+
+
     public Part getPrevPart(ArrayList<Part> parts) {
         return parts.get(parts.size() -1);
     }
