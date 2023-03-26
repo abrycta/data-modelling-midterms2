@@ -98,12 +98,12 @@ public class Simulator {
                         calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(event.getEventType(),
                                 event.getEventID(), getPrevSigmaTS(eventArrayList),event.getLongestTimeInSystem())); // ΣTS
 
-//                event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(event.getAreaUnderQueueLengthCurve())); // ∫Q
-//                event.setHighestLevelOfQ(calculateHighestLevelOfQ(event.getHighestLevelOfQ())); // Q*
-//                event.setAreaUnderServerBusy(calculateAreaUnderServerBusy(event.getAreaUnderServerBusy())); // ∫B
+                event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(event.getTime(), getPrevTime(eventArrayList), event.getNumberOfPartsInQueue()-1, getPrevAreaUnderCurve(eventArrayList))); // ∫Q
+                event.setHighestLevelOfQ(calculateHighestLevelOfQ(eventArrayList)); // Q*
+                event.setAreaUnderServerBusy(calculateAreaUnderServerBusy(event.getTime(), getPrevTime(eventArrayList), event.getUtilization()-1, getPrevAreaUnderServerBusy(eventArrayList))); // ∫B
             }
             eventArrayList.add(event);
-            // currentTime = next arrival time
+            // currentTime = next arrival time ** PAKIAYOS
         }
     return eventArrayList;
     }
@@ -132,6 +132,18 @@ public class Simulator {
 
     public double getPrevTS(ArrayList<Event> eventArrayList) {
         return eventArrayList.get(eventArrayList.size()-1).getLongestTimeInSystem();
+    }
+
+    public double getPrevTime(ArrayList<Event> eventArrayList) {
+        return eventArrayList.get(eventArrayList.size()-1).getTime();
+    }
+
+    public double getPrevAreaUnderCurve(ArrayList<Event> eventArrayList) {
+        return  eventArrayList.get(eventArrayList.size()-1).getAreaUnderQueueLengthCurve();
+    }
+
+    public double getPrevAreaUnderServerBusy(ArrayList<Event> eventArrayList) {
+        return  eventArrayList.get(eventArrayList.size()-1).getAreaUnderServerBusy();
     }
 
     // Returns the eventID
@@ -292,15 +304,23 @@ public class Simulator {
     }
 
 
-    public double calculateAreaUnderQueueLengthCurve(double areaUnderQueueLengthCurve) {
+    public double calculateAreaUnderQueueLengthCurve(double eventTime, double prevTime, double Q, double prevAreaUnderCurve) {
+        double areaUnderQueueLengthCurve = (eventTime - prevTime) * (Q - 0) + prevAreaUnderCurve;
         return areaUnderQueueLengthCurve;
     }
 
-    public double calculateHighestLevelOfQ(double highestLevelOfQ) {
+    public double calculateHighestLevelOfQ(ArrayList<Event> eventArrayList) {
+        double highestLevelOfQ = 0;
+        for (Event event : eventArrayList){
+            if(highestLevelOfQ < event.getNumberOfPartsInQueue()){
+                highestLevelOfQ = event.getNumberOfPartsInQueue();
+            }
+        }
         return highestLevelOfQ;
     }
 
-    public double calculateAreaUnderServerBusy(double areaUnderServerBusy) {
+    public double calculateAreaUnderServerBusy(double eventTime, double prevTime, double B, double prevAreaUnderServerBusy) {
+        double areaUnderServerBusy = (eventTime - prevTime) * (B - 0) + prevAreaUnderServerBusy;
         return areaUnderServerBusy;
     }
 
