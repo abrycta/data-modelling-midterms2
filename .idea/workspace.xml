@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Fix OOB for parts simulator">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
     </list>
@@ -70,6 +71,7 @@
       <workItem from="1679758533971" duration="11334000" />
       <workItem from="1679805565502" duration="418000" />
       <workItem from="1679820774735" duration="4613000" />
+      <workItem from="1679829890990" duration="2460000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
@@ -130,21 +132,5 @@
     <MESSAGE value="Fixes for Time, entity, event type" />
     <MESSAGE value="Fix OOB for parts simulator" />
     <option name="LAST_COMMIT_MESSAGE" value="Fix OOB for parts simulator" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>77</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>403</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
