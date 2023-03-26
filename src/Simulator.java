@@ -46,11 +46,11 @@ public class Simulator {
                 event.setHighestLevelOfQ(0); // Q*
                 event.setAreaUnderServerBusy(0); // ∫B
             } else {
-                event.setEventID(calculateEventID(eventArrayList));
+                event.setEventID(calculateEventID(parts, eventArrayList));
 
                 event.setTime(calculateTime(parts, eventArrayList));
 
-                event.setEventType(getEventType()); // 0 = Initialize, 1 = Arrival, 2 = Departure
+                event.setEventType(getEventType(parts, eventArrayList)); // 0 = Initialize, 1 = Arrival, 2 = Departure
 
                 // Stores event IDs that are in queue
                 if (event.getEventType() == 1) {
@@ -163,6 +163,7 @@ public class Simulator {
         ArrayList<Event> arrivalEvents = new ArrayList<>();
         for (Part part : parts) {
             Event event = new Event();
+            event.setEventType(1);
             event.setTime(part.getArrivalTime());
             event.setEntityNumber(part.getId());
             arrivalEvents.add(event);
@@ -176,12 +177,14 @@ public class Simulator {
 
             // case part 1
             if (part.getId() == 1) {
+                departure.setEventType(2);
                 departure.setTime(part.getServiceTime());
                 eventInService = departure;
                 departureEvents.add(departure);
                 calendar.add(eventInService);
                 // systemTime += part.getServiceTime();
             } else {
+                departure.setEventType(2);
                 departure.setTime(
                         eventInService.getTime() + part.getServiceTime()
                 );
