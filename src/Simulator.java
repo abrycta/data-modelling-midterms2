@@ -371,8 +371,9 @@ public class Simulator {
 
         while(simulationTime < minutes) {
             // case first part in queue, arrival time is at 0
-            if (part.getId() == 1) {
+            if (parts.isEmpty()) {
                 part.setServiceTime(Randomizer.lookUpServiceTime());
+                parts.add(part);
             }
             // parts 2 and beyond
             else {
@@ -400,7 +401,10 @@ public class Simulator {
 class Test {
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
+        simulator.simulateParts(40);
         ArrayList<Event> eventArrayList = simulator.simulateMinutes(40);
+       System.out.println( simulator.simulateParts(2));
+
         for(Event e: eventArrayList){
             System.out.print(e.getEventID() + "    ");
             System.out.print(e.getTime() + "    ");
@@ -422,6 +426,5 @@ class Test {
             System.out.println();
 
         }
-
     }
 }
