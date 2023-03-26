@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Fix OOB for parts simulator">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +47,21 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.SimulationUI">
+    <configuration name="SimulationUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SimulationUI" />
+      <module name="data-modelling-midterms2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <module name="data-modelling-midterms2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test" />
       <module name="data-modelling-midterms2" />
@@ -58,6 +71,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SimulationUI" />
+        <item itemvalue="Application.Test (1)" />
         <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
@@ -73,6 +88,7 @@
       <workItem from="1679758533971" duration="11334000" />
       <workItem from="1679805565502" duration="418000" />
       <workItem from="1679820774735" duration="4613000" />
+      <workItem from="1679856797807" duration="320000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
