@@ -102,9 +102,9 @@ public class Simulator {
                         calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(getPrevSigmaTS(eventArrayList),
                                 event.getLongestTimeInSystem(), event.getEventType())); // ΣTS
 
-                event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(event.getTime(), getPrevTime(eventArrayList), event.getNumberOfPartsInQueue()-1, getPrevAreaUnderCurve(eventArrayList))); // ∫Q
+                event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(eventArrayList, event)); // ∫Q
                 event.setHighestLevelOfQ(calculateHighestLevelOfQ(eventArrayList)); // Q*
-                event.setAreaUnderServerBusy(calculateAreaUnderServerBusy(event.getTime(), getPrevTime(eventArrayList), event.getUtilization()-1, getPrevAreaUnderServerBusy(eventArrayList))); // ∫B
+                event.setAreaUnderServerBusy(calculateAreaUnderServerBusy(eventArrayList, event)); // ∫B
             }
             if (counter == partsCalendar.size()){
 
@@ -149,11 +149,19 @@ public class Simulator {
         return  eventArrayList.get(eventArrayList.size()-1).getAreaUnderQueueLengthCurve();
     }
 
+    public double getPrevNumOfPartsInQueue(ArrayList<Event> eventArrayList) {
+        return  eventArrayList.get(eventArrayList.size()-1).getNumberOfPartsInQueue();
+    }
+
     public double getPrevAreaUnderServerBusy(ArrayList<Event> eventArrayList) {
         return  eventArrayList.get(eventArrayList.size()-1).getAreaUnderServerBusy();
     }
 
-    public ArrayList<Event> constructCalendar(ArrayList<Part> parts1) {
+    public double getPrevUtil(ArrayList<Event> eventArrayList) {
+        return  eventArrayList.get(eventArrayList.size()-1).getUtilization();
+    }
+
+    public ArrayList<Event> constructCalendar(ArrayList<Part> parts) {
 
         ArrayList<Event> calendar = new ArrayList<>();
         Event eventInService = new Event();
@@ -165,15 +173,15 @@ public class Simulator {
         Event lastDeparture = new Event();
 
         // for testing only
-        ArrayList<Part> parts = new ArrayList<>();
-        Part part = new Part(1,0,0,4);
-        Part part1 = new Part(2,3,3,3);
-        Part part2 = new Part(3,5,2,2);
-        Part part3 = new Part(4,10,5,3);
-        parts.add(part);
-        parts.add(part1);
-        parts.add(part2);
-        parts.add(part3);
+//        ArrayList<Part> parts = new ArrayList<>();
+//        Part part = new Part(1,0,0,4);
+//        Part part1 = new Part(2,3,3,3);
+//        Part part2 = new Part(3,5,2,2);
+//        Part part3 = new Part(4,10,5,3);
+//        parts.add(part);
+//        parts.add(part1);
+//        parts.add(part2);
+//        parts.add(part3);
         //
 
         int partsCounter = 0;
@@ -356,8 +364,12 @@ public class Simulator {
     }
 
 
-    public double calculateAreaUnderQueueLengthCurve(double eventTime, double prevTime, double Q, double prevAreaUnderCurve) {
-        double areaUnderQueueLengthCurve = (eventTime - prevTime) * (Q - 0) + prevAreaUnderCurve;
+    public double calculateAreaUnderQueueLengthCurve(ArrayList<Event> eventArrayList, Event event) {
+        double currentTime = event.getTime();
+        double prevTime = getPrevTime(eventArrayList);
+        double prevNumOfPartsInQueue = getPrevNumOfPartsInQueue(eventArrayList);
+        double prevAreaUnderCurve = getPrevAreaUnderCurve(eventArrayList);
+        double areaUnderQueueLengthCurve = ((currentTime - prevTime) * (prevNumOfPartsInQueue - 0)) + prevAreaUnderCurve;
         return areaUnderQueueLengthCurve;
     }
 
@@ -371,8 +383,12 @@ public class Simulator {
         return highestLevelOfQ;
     }
 
-    public double calculateAreaUnderServerBusy(double eventTime, double prevTime, double B, double prevAreaUnderServerBusy) {
-        double areaUnderServerBusy = (eventTime - prevTime) * (B - 0) + prevAreaUnderServerBusy;
+    public double calculateAreaUnderServerBusy(ArrayList<Event> eventArrayList, Event event) {
+        double currentTime = event.getTime();
+        double prevTime = getPrevTime(eventArrayList);
+        double prevUtil = getPrevUtil(eventArrayList);
+        double prevAreaUnderServerBusy = getPrevAreaUnderServerBusy(eventArrayList);
+        double areaUnderServerBusy = ((currentTime - prevTime) * (prevUtil - 0)) + prevAreaUnderServerBusy;
         return areaUnderServerBusy;
     }
 
@@ -380,7 +396,7 @@ public class Simulator {
             FOR STATISTICS
      */
     public double averageTotalTimeInSystem(ArrayList<Event> eventArrayList) {
-        Event e = eventArrayList.get(eventArrayList.size()-1);
+        Event e = new Event();
         double totalTime = e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
         double totalPart = e.getPartsProducedSoFar();
         return totalTime/totalPart; // time per part
@@ -401,7 +417,7 @@ public class Simulator {
     }
 
     public double drillPressUtilization(ArrayList<Event> eventArrayList) {
-        Event e = eventArrayList.get(eventArrayList.size() - 1);
+        Event e = eventArrayList.get(eventArrayList.size()-1);
         double areaUnderB = e.getAreaUnderServerBusy();
         double finalClockValue = e.getTime();
         return areaUnderB/finalClockValue; // per minute
@@ -452,9 +468,9 @@ public class Simulator {
 class Test {
     public static void main(String[] args) {
         Simulator simulator = new Simulator();
-        simulator.simulateParts(40);
-        ArrayList<Event> eventArrayList = simulator.simulateMinutes(10);
-       System.out.println( simulator.simulateParts(2));
+        //simulator.simulateParts(40);
+        ArrayList<Event> eventArrayList = simulator.simulateMinutes(30);
+        //System.out.println( simulator.simulateParts(2));
 
         for(Event e: eventArrayList){
 //            System.out.print(e.getEventID() + "    ");
@@ -475,7 +491,7 @@ class Test {
 //            System.out.print(e.getHighestLevelOfQ() + "    ");
 //            System.out.print(e.getAreaUnderServerBusy() + "    ");
 //            System.out.println();
-            System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%-10s%n",
+            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%n",
                     e.getEventID(), e.getTime(), e.getEventType(), e.getNumberOfPartsInQueue(),
                     e.getUtilization(), e.getTimesInQueue(), e.getPartInServiceTime(), e.getPartsProducedSoFar(),
                     e.getNumberOfPartsThatPassedThroughTheQueueSoFar(), e.getWaitingTimeInQueueSoFar(),
