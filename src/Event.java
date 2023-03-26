@@ -21,7 +21,7 @@ public class Event {
     private double waitingTimeInQueueSoFar; // sigma wq
     private double longestTimeSpentInQueueSoFar;    // WQ*
 
-    private double totalTimeSpentInSystemByAllPartsThatHaveDeparted;    // sigma TS
+    private double totalTimeSpentInSystemByAllPartsThatHaveDeparted;    // sigmaTS
     private double longestTimeInSystem; // TS*
 
     private double areaUnderQueueLengthCurve;   // integral Q

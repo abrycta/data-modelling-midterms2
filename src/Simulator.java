@@ -90,13 +90,14 @@ public class Simulator {
                 event.setWaitingTimeInQueueSoFar(calculateWaitingTimeInQueueSoFar(event.getEventType(),
                         getPrevWaitingTimeQueueSoFar(eventArrayList),event.getLongestTimeSpentInQueueSoFar())); // ΣWQ
 
+                event.setTotalTimeSpentInSystemByAllPartsThatHaveDeparted(
+                        calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(eventArrayList, getPrevSigmaTS(eventArrayList))
+                );
 
-                event.setLongestTimeInSystem(calculateLongestTimeInSystem(event.getEventType(), event.getEventID(),
-                        eventArrayList, getPrevTS(eventArrayList))); // TS*
+                event.setLongestTimeInSystem(calculateLongestTimeInSystem(eventArrayList)); //TS*
 
                 event.setTotalTimeSpentInSystemByAllPartsThatHaveDeparted(
-                        calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(event.getEventType(),
-                                event.getEventID(), getPrevSigmaTS(eventArrayList),event.getLongestTimeInSystem())); // ΣTS
+                        calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(constructCalendar(parts, eventArrayList), getPrevSigmaTS(eventArrayList))); // ΣTS
 
                 event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(event.getTime(), getPrevTime(eventArrayList), event.getNumberOfPartsInQueue()-1, getPrevAreaUnderCurve(eventArrayList))); // ∫Q
                 event.setHighestLevelOfQ(calculateHighestLevelOfQ(eventArrayList)); // Q*
@@ -291,16 +292,48 @@ public class Simulator {
 
     // retain values if event type is arrival
     // TS*
-    public double calculateLongestTimeInSystem(int eventType, int eventID, ArrayList<Event> eventArrayList, double prevTS) {
-        double longestTimeInSystem = 0;
-        return longestTimeInSystem;
+    public double calculateLongestTimeInSystem(ArrayList<Event> calendar) {
+        double max = 0;
+
+        for (Event event : calendar) {
+            if (max < event.getLongestTimeInSystem()) {
+                max = event.getLongestTimeInSystem();
+            }
+        }
+
+        return max;
     }
 
     // retain values if event is arrival
     // sigma TS
-    public double calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(int eventType, int eventID, double prevSigmaTS, double TS) {
-        double totalTimeSpentInSystemByAllPartsThatHaveDeparted = 0;
-        return totalTimeSpentInSystemByAllPartsThatHaveDeparted;
+    public double calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(ArrayList<Event> calendar, double prevSigmaTs) {
+
+        // the arrival of part 2 - the departure of part 1
+        // change only sigmaTS if current event is a departure
+        for (Event currDepartedEvent : calendar) {
+            // case initialization and arrival of entity 1
+            if (currDepartedEvent.getEventType() == 0 || (currDepartedEvent.getEventType() == 1 && currDepartedEvent.getEntityNumber() == 1)) {
+                return 0;
+            }
+
+            // look for departure events
+            if (currDepartedEvent.getEventType() == 2) {
+                // assuming that the current event is a departure
+                // get the arrival of the next part
+                int currDepartedEntity = currDepartedEvent.getEntityNumber();
+
+                // look for matching arrival events
+                for (Event arrivalOfNextPart : calendar) {
+                    // check if event is an arrival event
+                    // and that the entity number of the next arrival event is more than 1
+                    if(currDepartedEvent.getEventType() == 1 && currDepartedEvent.getEntityNumber() == currDepartedEntity + 1) {
+                        return currDepartedEvent.getTime() - arrivalOfNextPart.getTime();
+                    }
+                }
+            }
+        }
+        // return an unmodified value
+        return prevSigmaTs;
     }
 
 
