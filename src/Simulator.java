@@ -17,7 +17,7 @@ public class Simulator {
         ArrayList<Integer> eventIDsInQueue = new ArrayList<>();
         ArrayList<Integer> eventIdsDeparted = new ArrayList<>();
         ArrayList<Integer> eventIdsPassedQueue = new ArrayList<>();
-        int currentTime = 0;
+        double currentTime = 0;
         ArrayList<Part> parts = simulateParts(numberOfMinutes);
 
         //  Simulate the specified number of minutes
@@ -104,7 +104,7 @@ public class Simulator {
                 event.setAreaUnderServerBusy(calculateAreaUnderServerBusy(event.getTime(), getPrevTime(eventArrayList), event.getUtilization()-1, getPrevAreaUnderServerBusy(eventArrayList))); // ∫B
             }
             eventArrayList.add(event);
-            // currentTime = next arrival time ** PAKIAYOS
+            currentTime = calculateTime(parts, eventArrayList);
         }
     return eventArrayList;
     }
@@ -392,7 +392,34 @@ public class Simulator {
         return parts;
     }
 
+}
 
 
+class Test {
+    public static void main(String[] args) {
+        Simulator simulator = new Simulator();
+        ArrayList<Event> eventArrayList = simulator.simulateMinutes(40);
+        for(Event e: eventArrayList){
+            System.out.print(e.getEventID() + "    ");
+            System.out.print(e.getTime() + "    ");
+            System.out.print(e.getEventType() + "    ");
+            System.out.print(e.getTimesInQueue() + "    ");
+            System.out.print(e.getNumberOfPartsInQueue() + "    ");
+            System.out.print(e.getUtilization() + "    ");
+            System.out.print(e.getPartArrivalTime() + "    ");
+            System.out.print(e.getPartInServiceTime() + "    ");
+            System.out.print(e.getPartsProducedSoFar() + "    ");
+            System.out.print(e.getNumberOfPartsThatPassedThroughTheQueueSoFar() + "    ");
+            System.out.print(e.getWaitingTimeInQueueSoFar() + "    ");
+            System.out.print(e.getLongestTimeSpentInQueueSoFar() + "    ");
+            System.out.print(e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted() + "    ");
+            System.out.print(e.getLongestTimeInSystem() + "    ");
+            System.out.print(e.getAreaUnderQueueLengthCurve() + "    ");
+            System.out.print(e.getHighestLevelOfQ() + "    ");
+            System.out.print(e.getAreaUnderServerBusy() + "    ");
+            System.out.println();
 
+        }
+
+    }
 }
