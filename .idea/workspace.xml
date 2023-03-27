@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Fix OOB for parts simulator">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Added UI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +89,8 @@
       <workItem from="1679758533971" duration="11334000" />
       <workItem from="1679805565502" duration="418000" />
       <workItem from="1679820774735" duration="4613000" />
-      <workItem from="1679856797807" duration="320000" />
+      <workItem from="1679856797807" duration="421000" />
+      <workItem from="1679900418912" duration="2610000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
@@ -125,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679826955058</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added UI">
+      <created>1679857171163</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679857171163</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,19 +157,20 @@
     <MESSAGE value="Time, entity, event type" />
     <MESSAGE value="Fixes for Time, entity, event type" />
     <MESSAGE value="Fix OOB for parts simulator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix OOB for parts simulator" />
+    <MESSAGE value="Added UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added UI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>371</line>
+          <line>474</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>230</line>
+          <line>243</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
