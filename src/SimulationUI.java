@@ -1,11 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,7 +11,13 @@ public class SimulationUI extends JFrame implements ActionListener {
 
     private final JTextField simTimeTextField;
     private final JButton runButton;
+    private final JButton statButton;
     private final JTable resultTable;
+    private boolean runButtonPressed = false;
+    private double avgTotalSystemTime = 0;
+    private double avgWaitingQueueTime = 0;
+    private double avgQueueTimeNumber = 0;
+    private double drillPressUtil = 0;
 
     public SimulationUI() {
         setTitle("Simulation UI");
@@ -47,7 +46,14 @@ public class SimulationUI extends JFrame implements ActionListener {
         runButton.setFont(new Font("Arial", Font.PLAIN, 16));
         runButton.setBackground(Color.WHITE);
         runButton.setForeground(Color.BLACK);
-        inputPanel.add(runButton, gridBagConstraints);
+
+        statButton = new JButton("Statistics");
+        statButton.addActionListener(this);
+        statButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        statButton.setBackground(Color.WHITE);
+        statButton.setForeground(Color.BLACK);
+        inputPanel.add(runButton);
+        inputPanel.add(statButton);
 
         String[] columnNames = {"Entity No.", "Time t", "Event type", "Q(t)", "B(t)", "Arrival time in queue",
                 "Arrival time in service","P", "N", "ΣWQ", "WQ*", "ΣTS", "TS*", "∫Q", "Q*", "∫B"};
@@ -66,7 +72,7 @@ public class SimulationUI extends JFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(resultTable);
 
         // set cells not editable
-        DefaultCellEditor nonEditagbleCellEditor = new DefaultCellEditor(new JTextField()) {
+        DefaultCellEditor nonEditableCellEditor = new DefaultCellEditor(new JTextField()) {
             @Override
             public boolean isCellEditable(EventObject eventObject) {
                 return false;
@@ -74,7 +80,7 @@ public class SimulationUI extends JFrame implements ActionListener {
         };
 
         for (int i = 0; i < resultTable.getColumnCount(); i++) {
-            resultTable.getColumnModel().getColumn(i).setCellEditor(nonEditagbleCellEditor);
+            resultTable.getColumnModel().getColumn(i).setCellEditor(nonEditableCellEditor);
         }
 
         TableColumnModel tableColumnModel = resultTable.getColumnModel();
@@ -105,15 +111,21 @@ public class SimulationUI extends JFrame implements ActionListener {
         clearTable(resultTable);
 
         Simulator simulator = new Simulator();
+        ArrayList<Event> eventArrayList;
         if (e.getSource() == runButton) {
             try {
                 // Get simulation time from input field
                 int simTime = Integer.parseInt(simTimeTextField.getText());
-                ArrayList<Event> eventArrayList = simulator.simulateMinutes(simTime);
+                eventArrayList = simulator.simulateMinutes(simTime);
                 // Run simulation and update result table
                 // retrieve defaultTableModel
                 DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
 
+                // set the init row
+                Object[] initValues = {"-", "0.00", "Init", "0", "0", "0", "0", "0", "0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0"};
+                model.addRow(initValues);
+
+                // set the rows
                 for (Event event : eventArrayList) {
                     Object[] tableValues = {event.getEventID(), event.getTime(), event.getEventType(), event.getNumberOfPartsInQueue(),
                             event.getUtilization(), event.getTimesInQueue(), event.getPartInServiceTime(), event.getPartsProducedSoFar(),
@@ -124,8 +136,61 @@ public class SimulationUI extends JFrame implements ActionListener {
 
                     model.addRow(tableValues);
                 }
+
+                // set the end row
+                if (!eventArrayList.isEmpty()) {
+                    Event lastEvent = eventArrayList.get(eventArrayList.size() - 1);
+                    lastEvent.setTime(simTime);
+                    Object[] endValues = {"-", lastEvent.getTime(), "End", lastEvent.getNumberOfPartsInQueue(),
+                            lastEvent.getUtilization(), lastEvent.getTimesInQueue(), lastEvent.getPartInServiceTime(), lastEvent.getPartsProducedSoFar(),
+                            lastEvent.getNumberOfPartsThatPassedThroughTheQueueSoFar(), lastEvent.getWaitingTimeInQueueSoFar(),
+                            lastEvent.getLongestTimeSpentInQueueSoFar(), lastEvent.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
+                            lastEvent.getLongestTimeInSystem(), lastEvent.getAreaUnderQueueLengthCurve(), lastEvent.getHighestLevelOfQ(),
+                            lastEvent.getAreaUnderServerBusy()};
+                    model.addRow(endValues);
+                }
+
+                avgTotalSystemTime = simulator.averageTotalTimeInSystem(eventArrayList);
+                avgWaitingQueueTime = simulator.averageWaitingTimeInQueue(eventArrayList);
+                avgQueueTimeNumber = simulator.timeAverageNumberInQueue(eventArrayList);
+                drillPressUtil = simulator.drillPressUtilization(eventArrayList);
+
+                runButtonPressed = true;
             } catch (NumberFormatException ex) {
                 showErrorMessage("Please enter a simulation time", "Invalid");
+            }
+        }
+
+        if (e.getSource() == statButton) {
+            if (runButtonPressed) {
+                JFrame statFrame = new JFrame("Statistics");
+                JPanel statPanel = new JPanel(new GridLayout(1, 1));
+
+                String[] columnNames = {"", "Value"};
+                Object[][] data = {
+                        {"Average Total Time in System", ""},
+                        {"Average Waiting Time in Queue", ""},
+                        {"Time Average Number in Queue", ""},
+                        {"Drill Press Utilization", ""}
+                };
+                DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+                JTable table = new JTable(tableModel);
+                table.getTableHeader().setReorderingAllowed(false);
+
+                tableModel.setValueAt(avgTotalSystemTime, 0, 1); // Average Total Time in System
+                tableModel.setValueAt(avgWaitingQueueTime, 1, 1); // Average Waiting Time in Queue
+                tableModel.setValueAt(avgQueueTimeNumber, 2, 1); // Time Average Number in Queue
+                tableModel.setValueAt(drillPressUtil, 3, 1); // Drill Press Utilization
+
+                JScrollPane scrollPane = new JScrollPane(table);
+                statPanel.add(scrollPane);
+
+                statFrame.add(statPanel);
+                statFrame.setSize(500, 300);
+                statFrame.setLocationRelativeTo(null);
+                statFrame.setVisible(true);
+            } else {
+                showErrorMessage("You must simulate first", "Error!");
             }
         }
     }
