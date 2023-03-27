@@ -112,6 +112,7 @@ public class Simulator {
             eventArrayList.add(event);
             counter++;
         }
+
     return eventArrayList;
     }
 
@@ -161,7 +162,7 @@ public class Simulator {
         return  eventArrayList.get(eventArrayList.size()-1).getUtilization();
     }
 
-    public ArrayList<Event> constructCalendar(ArrayList<Part> parts) {
+    public ArrayList<Event> constructCalendar1(ArrayList<Part> parts1) {
 
         ArrayList<Event> calendar = new ArrayList<>();
         Event eventInService = new Event();
@@ -173,15 +174,26 @@ public class Simulator {
         Event lastDeparture = new Event();
 
         // for testing only
-//        ArrayList<Part> parts = new ArrayList<>();
-//        Part part = new Part(1,0,0,4);
-//        Part part1 = new Part(2,3,3,3);
-//        Part part2 = new Part(3,5,2,2);
-//        Part part3 = new Part(4,10,5,3);
-//        parts.add(part);
-//        parts.add(part1);
-//        parts.add(part2);
-//        parts.add(part3);
+        ArrayList<Part> parts = new ArrayList<>();
+        Part part = new Part(1,0,0,3);
+        Part part1 = new Part(2,3,3,2);
+        Part part2 = new Part(3,5,2,5);
+        Part part3 = new Part(4,9,4,4);
+        Part part4 = new Part(5, 10, 1,4);
+        Part part5 = new Part(6, 13, 3,4);
+        Part part6 = new Part(7, 17, 4,2);
+        Part part7 = new Part(8, 24, 7,1);
+        Part part8 = new Part(9, 30, 6,1);
+
+        parts.add(part);
+        parts.add(part1);
+        parts.add(part2);
+        parts.add(part3);
+        parts.add(part4);
+        parts.add(part5);
+        parts.add(part6);
+        parts.add(part7);
+        parts.add(part8);
         //
 
         int partsCounter = 0;
@@ -204,11 +216,21 @@ public class Simulator {
                 departure.setEntityNumber(eventInService.getEntityNumber());
                 lastDeparture = departure;
                 calendar.add(departure);
-                eventInService = arrivalEventsQueue.remove();
                 if (arrivalEventsQueue.isEmpty()) {
                     eventInService = new Event();
+                } else {
+                    eventInService = arrivalEventsQueue.remove();
                 }
-            } else if (eventInService.getServiceTime() == 0){
+            }  else if (eventInService.getServiceTime() == 0){
+                arrivalEvent.setEventType(1);
+                arrivalEvent.setTime(parts.get(partsCounter).getArrivalTime());
+                arrivalEvent.setEntityNumber(parts.get(partsCounter).getId());
+                arrivalEvent.setServiceTime(parts.get(partsCounter).getServiceTime());
+                arrivalEvents.add(arrivalEvent);
+                eventInService = arrivalEvent;
+                partsCounter++;
+                calendar.add(arrivalEvent);
+            } else if (lastDeparture.getTime() + eventInService.getServiceTime() > parts.get(partsCounter).getArrivalTime()) {
                 arrivalEvent.setEventType(1);
                 arrivalEvent.setTime(parts.get(partsCounter).getArrivalTime());
                 arrivalEvent.setEntityNumber(parts.get(partsCounter).getId());
@@ -216,15 +238,6 @@ public class Simulator {
                 arrivalEvents.add(arrivalEvent);
                 arrivalEventsQueue.add(arrivalEvent);
                 eventInService = arrivalEvent;
-                partsCounter++;
-                calendar.add(arrivalEvent);
-            }  else if (lastDeparture.getTime() + eventInService.getServiceTime() > parts.get(partsCounter).getArrivalTime()) {
-                arrivalEvent.setEventType(1);
-                arrivalEvent.setTime(parts.get(partsCounter).getArrivalTime());
-                arrivalEvent.setEntityNumber(parts.get(partsCounter).getId());
-                arrivalEvent.setServiceTime(parts.get(partsCounter).getServiceTime());
-                arrivalEvents.add(arrivalEvent);
-                arrivalEventsQueue.add(arrivalEvent);
                 partsCounter++;
                 calendar.add(arrivalEvent);
             } else if (lastDeparture.getTime() + eventInService.getServiceTime() <= parts.get(partsCounter).getArrivalTime()) {
@@ -248,12 +261,102 @@ public class Simulator {
 
 
         }
+        System.out.println("Parts");
+        for(Event e: calendar){
 
+            System.out.printf("%-30s%-30s%n",
+                    e.getEntityNumber(), e.getTime());
+
+        }
+        System.out.println();
+        for(Part partt: parts) {
+            System.out.printf("%-30s%-30s%-30s%-30s%n",
+                    partt.getId(), partt.getArrivalTime(), partt.getInterArrivalTime(), partt.getServiceTime());
+        }
         // calendar is the superlist, containing the entire calendar
         // get the time of the calendar entry that matches with
         // the index of the event list
+        System.out.println();
         return calendar;
     }
+
+    public ArrayList<Event> constructCalendar(ArrayList<Part> parts1) {
+        ArrayList<Part> parts = new ArrayList<>();
+        Part partt = new Part(1,0,0,3);
+        Part part1 = new Part(2,3,3,2);
+        Part part2 = new Part(3,5,2,5);
+        Part part3 = new Part(4,9,4,4);
+        Part part4 = new Part(5, 10, 1,4);
+        Part part5 = new Part(6, 13, 3,4);
+        Part part6 = new Part(7, 17, 4,2);
+        Part part7 = new Part(8, 24, 7,1);
+        Part part8 = new Part(9, 30, 6,1);
+
+        parts.add(partt);
+        parts.add(part1);
+        parts.add(part2);
+        parts.add(part3);
+        parts.add(part4);
+        parts.add(part5);
+        parts.add(part6);
+        parts.add(part7);
+        parts.add(part8);
+        ArrayList<Event> calendar = new ArrayList<>();
+        Event eventInService = new Event();
+        // construct a list of events consisting of arrival times
+        // reminder, indices are 0-based
+        ArrayList<Event> arrivalEvents = new ArrayList<>();
+        for (Part part : parts) {
+            Event event = new Event();
+            event.setEventType(1);
+            event.setTime(part.getArrivalTime());
+            event.setEntityNumber(part.getId());
+            arrivalEvents.add(event);
+            calendar.add(event);
+        }
+        // construct a list of events consisting of departure times
+        ArrayList<Event> departureEvents = new ArrayList<>();
+        for (Part part : parts) {
+            Event departure = new Event();
+            // case part 1
+            if (part.getId() == 1) {
+                departure.setEventType(2);
+                departure.setTime(part.getArrivalTime() + part.getServiceTime());
+                departure.setEntityNumber(part.getId());
+                eventInService = departure;
+                departureEvents.add(departure);
+                calendar.add(eventInService);
+            } else {
+                departure.setEventType(2);
+                departure.setTime(
+                        eventInService.getTime() + part.getServiceTime()
+                );
+                departure.setEntityNumber(part.getId());
+                eventInService = departure;
+                departureEvents.add(departure);
+                calendar.add(eventInService);
+            }
+        }
+        // sort list by time
+        calendar.sort(Comparator.comparing(Event::getTime));
+        // calendar is the superlist, containing the entire calendar
+        // get the time of the calendar entry that matches with
+        // the index of the event list
+        System.out.println("Parts");
+        for(Event e: calendar){
+
+            System.out.printf("%-30s%-30s%n",
+                    e.getEntityNumber(), e.getTime());
+
+        }
+        System.out.println();
+        for(Part parttt: parts) {
+            System.out.printf("%-30s%-30s%-30s%-30s%n",
+                    parttt.getId(), parttt.getArrivalTime(), parttt.getInterArrivalTime(), parttt.getServiceTime());
+        }
+        return calendar;
+    }
+
 
 
     // removes queue if event is departure and adds queue if arrival
