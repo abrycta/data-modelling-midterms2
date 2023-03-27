@@ -49,7 +49,6 @@ public class SimulationUI extends JFrame implements ActionListener {
         runButton.setForeground(Color.BLACK);
 
         statButton = new JButton("Statistics");
-        statButton.addActionListener(this);
         statButton.setFont(new Font("Arial", Font.PLAIN, 16));
         statButton.setBackground(Color.WHITE);
         statButton.setForeground(Color.BLACK);
@@ -104,6 +103,17 @@ public class SimulationUI extends JFrame implements ActionListener {
         contentPane.add(scrollPane, BorderLayout.CENTER);
         contentPane.setBackground(Color.WHITE);
         add(contentPane);
+
+        statButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (runButtonPressed) {
+                    statFrame.setVisible(true);
+                } else {
+                    showErrorMessage("You must simulate first", "Error!");
+                }
+            }
+        });
     }
 
     @Override
@@ -161,44 +171,41 @@ public class SimulationUI extends JFrame implements ActionListener {
                 drillPressUtil = simulator.drillPressUtilization(eventArrayList);
 
                 runButtonPressed = true;
+                startStatFrame();
             } catch (NumberFormatException ex) {
                 showErrorMessage("Please enter a simulation time", "Invalid");
             }
         }
+    }
 
-        if (e.getSource() == statButton) {
-            if (runButtonPressed) {
-                statFrame = new JFrame("Statistics");
-                JPanel statPanel = new JPanel(new GridLayout(1, 1));
+    public void startStatFrame() {
+        statFrame = new JFrame("Statistics");
+        JPanel statPanel = new JPanel(new GridLayout(1, 1));
 
-                String[] columnNames = {"", "Value"};
-                Object[][] data = {
-                        {"Average Total Time in System", ""},
-                        {"Average Waiting Time in Queue", ""},
-                        {"Time Average Number in Queue", ""},
-                        {"Drill Press Utilization", ""}
-                };
-                DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
-                JTable table = new JTable(tableModel);
-                table.getTableHeader().setReorderingAllowed(false);
+        String[] columnNames = {"Statistics", "Value"};
+        Object[][] data = {
+                {"Average Total Time in System", ""},
+                {"Average Waiting Time in Queue", ""},
+                {"Time Average Number in Queue", ""},
+                {"Drill Press Utilization", ""}
+        };
+        DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
+        JTable table = new JTable(tableModel);
+        table.getTableHeader().setReorderingAllowed(false);
 
-                tableModel.setValueAt(avgTotalSystemTime, 0, 1); // Average Total Time in System
-                tableModel.setValueAt(avgWaitingQueueTime, 1, 1); // Average Waiting Time in Queue
-                tableModel.setValueAt(avgQueueTimeNumber, 2, 1); // Time Average Number in Queue
-                tableModel.setValueAt(drillPressUtil, 3, 1); // Drill Press Utilization
+        tableModel.setValueAt(avgTotalSystemTime, 0, 1); // Average Total Time in System
+        tableModel.setValueAt(avgWaitingQueueTime, 1, 1); // Average Waiting Time in Queue
+        tableModel.setValueAt(avgQueueTimeNumber, 2, 1); // Time Average Number in Queue
+        tableModel.setValueAt(drillPressUtil, 3, 1); // Drill Press Utilization
 
-                JScrollPane scrollPane = new JScrollPane(table);
-                statPanel.add(scrollPane);
+        JScrollPane scrollPane = new JScrollPane(table);
+        statPanel.add(scrollPane);
 
-                statFrame.add(statPanel);
-                statFrame.setSize(500, 300);
-                statFrame.setLocationRelativeTo(null);
-                statFrame.setVisible(true);
-                statWindowStarted = true;
-            } else {
-                showErrorMessage("You must simulate first", "Error!");
-            }
-        }
+        statFrame.add(statPanel);
+        statFrame.setSize(500, 300);
+        statFrame.setLocationRelativeTo(null);
+        statFrame.setVisible(false);
+        statWindowStarted = true;
     }
 
     public void clearTable(JTable jtable) {

@@ -384,7 +384,7 @@ public class Simulator {
             FOR STATISTICS
      */
     public double averageTotalTimeInSystem(ArrayList<Event> eventArrayList) {
-        Event e = new Event();
+        Event e = eventArrayList.get(eventArrayList.size() - 1);
         double totalTime = e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
         double totalPart = e.getPartsProducedSoFar();
         return totalTime/totalPart; // time per part

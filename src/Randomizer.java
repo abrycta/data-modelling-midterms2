@@ -4,24 +4,25 @@ public class Randomizer {
 
     private static final Random RAND = new Random();
 
-    public static int lookupInterArrivalTime() {
+    public static double lookupInterArrivalTime() {
         double mean = 10.0;
-        double standardDeviation = 2.0;
+        double standardDeviation = 4.0;
+        int min = 1;
+        int max = 10;
+        double randomValue = mean + RAND.nextGaussian() * standardDeviation;
+        randomValue = Math.max(min, Math.min(max, randomValue));
+        return Math.round(randomValue * 100.0) / 100.0;
+    }
+
+    public static double lookUpServiceTime() {
+        double mean = 10;
+        double standardDeviation = 4.0;
         int min = 1;
         int max = 8;
-        int randomValue = (int) (mean + RAND.nextGaussian() * standardDeviation);
-        return Math.max(min, Math.min(max, randomValue));
+        double randomValue = mean + RAND.nextGaussian() * standardDeviation;
+        randomValue = Math.max(min, Math.min(max, randomValue));
+        return Math.round(randomValue * 100.0) / 100.0;
     }
-
-    public static int lookUpServiceTime() {
-        double mean = 8.0;
-        double standardDeviation = 2.0;
-        int min = 1;
-        int max = 5;
-        int randomValue = (int) (mean + RAND.nextGaussian() * standardDeviation);
-        return Math.max(min, Math.min(max, randomValue));
-    }
-
     //test
     public static void main(String[] args) {
         System.out.println("inter arrival time");
