@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Added error messages and few adjustments">
+    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Added statistics, init, and end rows">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
@@ -135,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679857171163</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added statistics, init, and end rows">
+      <created>1679941377481</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1679941377482</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,7 +166,8 @@
     <MESSAGE value="Fixes for Time, entity, event type" />
     <MESSAGE value="Fix OOB for parts simulator" />
     <MESSAGE value="Added UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added UI" />
+    <MESSAGE value="Added statistics, init, and end rows" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added statistics, init, and end rows" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

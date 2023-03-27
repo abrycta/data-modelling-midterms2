@@ -8,12 +8,13 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class SimulationUI extends JFrame implements ActionListener {
-
+    private JFrame statFrame;
     private final JTextField simTimeTextField;
     private final JButton runButton;
     private final JButton statButton;
     private final JTable resultTable;
     private boolean runButtonPressed = false;
+    private boolean statWindowStarted = false;
     private double avgTotalSystemTime = 0;
     private double avgWaitingQueueTime = 0;
     private double avgQueueTimeNumber = 0;
@@ -150,6 +151,10 @@ public class SimulationUI extends JFrame implements ActionListener {
                     model.addRow(endValues);
                 }
 
+                if (statWindowStarted) {
+                    statFrame.dispose();
+                }
+
                 avgTotalSystemTime = simulator.averageTotalTimeInSystem(eventArrayList);
                 avgWaitingQueueTime = simulator.averageWaitingTimeInQueue(eventArrayList);
                 avgQueueTimeNumber = simulator.timeAverageNumberInQueue(eventArrayList);
@@ -163,7 +168,7 @@ public class SimulationUI extends JFrame implements ActionListener {
 
         if (e.getSource() == statButton) {
             if (runButtonPressed) {
-                JFrame statFrame = new JFrame("Statistics");
+                statFrame = new JFrame("Statistics");
                 JPanel statPanel = new JPanel(new GridLayout(1, 1));
 
                 String[] columnNames = {"", "Value"};
@@ -189,6 +194,7 @@ public class SimulationUI extends JFrame implements ActionListener {
                 statFrame.setSize(500, 300);
                 statFrame.setLocationRelativeTo(null);
                 statFrame.setVisible(true);
+                statWindowStarted = true;
             } else {
                 showErrorMessage("You must simulate first", "Error!");
             }
