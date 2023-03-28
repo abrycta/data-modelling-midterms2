@@ -155,10 +155,11 @@ public class SimulationUI extends JFrame implements ActionListener {
 
                     // test for arrival time in service
                     // ignore the arrival events for entities 0, 1, 2
-                    String arrivalTimeInService = "";
+                    String arrivalTimeInService = String.valueOf(event.getPartInServiceTime());
+
                     if (event.getUtilization() == 0) {
                         arrivalTimeInService = "---";
-                    } else arrivalTimeInService = String.valueOf(event.getPartInServiceTime());
+                    }
 
                     Object[] tableValues = {event.getEventID(), event.getTime(), eventType, event.getNumberOfPartsInQueue(),
                             event.getUtilization(), event.getTimesInQueue(), arrivalTimeInService, event.getPartsProducedSoFar(),
