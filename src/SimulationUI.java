@@ -132,16 +132,26 @@ public class SimulationUI extends JFrame implements ActionListener {
                 // retrieve defaultTableModel
                 DefaultTableModel model = (DefaultTableModel) resultTable.getModel();
 
-                // set the init row
-                Object[] initValues = {"-", "0.00", "Init", "0", "0", "0", "0", "0", "0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0"};
-                model.addRow(initValues);
+//                // set the init row
+//                Event firstEvent = eventArrayList.get(0);
+//                Object[] initValues = {firstEvent.getEventID(), firstEvent.getTime(), "Init", firstEvent.getNumberOfPartsInQueue(),
+//                        firstEvent.getUtilization(), firstEvent.getTimesInQueue(), firstEvent.getPartInServiceTime(), firstEvent.getPartsProducedSoFar(),
+//                        firstEvent.getNumberOfPartsThatPassedThroughTheQueueSoFar(), firstEvent.getWaitingTimeInQueueSoFar(),
+//                        firstEvent.getLongestTimeSpentInQueueSoFar(), firstEvent.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
+//                        firstEvent.getLongestTimeInSystem(), firstEvent.getAreaUnderQueueLengthCurve(), firstEvent.getHighestLevelOfQ(),
+//                        firstEvent.getAreaUnderServerBusy()};
+//                model.addRow(initValues);
 
-                // set the rows
+                int counter = 0;
                 for (Event event : eventArrayList) {
-                    if (event.getEventType() == 1){
-                        eventType = "Arrival";
-                    } else if (event.getEventType() == 2){
-                        eventType = "Departure";
+                    if (counter == 0) {
+                        eventType = "Init";
+                    } else {
+                        if (event.getEventType() == 1){
+                            eventType = "Arrival";
+                        } else if (event.getEventType() == 2){
+                            eventType = "Departure";
+                        }
                     }
                     Object[] tableValues = {event.getEventID(), event.getTime(), eventType, event.getNumberOfPartsInQueue(),
                             event.getUtilization(), event.getTimesInQueue(), event.getPartInServiceTime(), event.getPartsProducedSoFar(),
@@ -149,8 +159,8 @@ public class SimulationUI extends JFrame implements ActionListener {
                             event.getLongestTimeSpentInQueueSoFar(), event.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
                             event.getLongestTimeInSystem(), event.getAreaUnderQueueLengthCurve(), event.getHighestLevelOfQ(),
                             event.getAreaUnderServerBusy()};
-
                     model.addRow(tableValues);
+                    counter++;
                 }
 
                 // set the end row

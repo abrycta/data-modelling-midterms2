@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Fixed Randomizer">
+    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Minor fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Randomizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Randomizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,15 +26,29 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2NEOEaQcKfDky2k6zabNqBuvuVm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Jade/IdeaProjects/data-modelling-midterms2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RunManager" selected="Application.SimulationUI">
     <configuration name="Randomizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Randomizer" />
@@ -51,6 +64,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Test" />
+      <module name="data-modelling-midterms2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test" />
       <module name="data-modelling-midterms2" />
@@ -61,8 +81,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.SimulationUI" />
-        <item itemvalue="Application.Test" />
         <item itemvalue="Application.Randomizer" />
+        <item itemvalue="Application.Test (1)" />
+        <item itemvalue="Application.Test" />
       </list>
     </recent_temporary>
   </component>
@@ -77,6 +98,8 @@
       <workItem from="1679758533971" duration="11334000" />
       <workItem from="1679805565502" duration="418000" />
       <workItem from="1679820774735" duration="4613000" />
+      <workItem from="1679856797807" duration="421000" />
+      <workItem from="1679900418912" duration="2610000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
@@ -113,14 +136,35 @@
       <option name="project" value="LOCAL" />
       <updated>1679826955058</updated>
     </task>
-    <task id="LOCAL-00006" summary="Fixed Randomizer">
-      <created>1679963629448</created>
+    <task id="LOCAL-00006" summary="Added UI">
+      <created>1679857171163</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1679963629448</updated>
+      <updated>1679857171163</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added statistics, init, and end rows">
+      <created>1679941377481</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1679941377482</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Minor fixes">
+      <created>1679942416380</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1679942416380</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fixed randomizer.java">
+      <created>1679959350245</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1679959350245</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,7 +180,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Parts simulation" />
@@ -144,33 +187,26 @@
     <MESSAGE value="Time, entity, event type" />
     <MESSAGE value="Fixes for Time, entity, event type" />
     <MESSAGE value="Fix OOB for parts simulator" />
-    <MESSAGE value="Fixed Randomizer" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Randomizer" />
+    <MESSAGE value="Added UI" />
+    <MESSAGE value="Added statistics, init, and end rows" />
+    <MESSAGE value="Minor fixes" />
+    <MESSAGE value="Fixed randomizer.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed randomizer.java" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>188</line>
-          <option name="timeStamp" value="15" />
+          <line>372</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>193</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>203</line>
-          <option name="timeStamp" value="17" />
+          <line>187</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="eventArrayList.get(0)" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>
