@@ -166,26 +166,6 @@ public class Simulator {
     }
 
     public ArrayList<Event> constructCalendar(ArrayList<Part> parts) {
-//        ArrayList<Part> parts = new ArrayList<>();
-//        Part partt = new Part(1,0,0,7.05);
-//        Part part1 = new Part(2,9.07,9.07,11.37);
-//        Part part2 = new Part(3,15.95,6.88,10.94);
-//        Part part3 = new Part(4,29.28,13.33,9.49);
-//        Part part4 = new Part(5, 13, 2,2);
-//        Part part5 = new Part(6, 21, 8,2);
-//        Part part6 = new Part(7, 29, 8,1);
-//        Part part7 = new Part(8, 31, 6,4);
-//        Part part8 = new Part(9, 31, 4,1);
-//        parts.add(partt);
-//        parts.add(part1);
-//        parts.add(part2);
-//        parts.add(part3);
-//        parts.add(part4);
-//        parts.add(part5);
-//        parts.add(part6);
-//        parts.add(part7);
-//        parts.add(part8);
-
         ArrayList<Event> calendar = new ArrayList<>();
         Event eventInService = new Event();
         // construct a list of events consisting of arrival times
@@ -230,19 +210,6 @@ public class Simulator {
         // calendar is the superlist, containing the entire calendar
         // get the time of the calendar entry that matches with
         // the index of the event list
-        System.out.println("Parts");
-        for(Event e: calendar){
-
-            System.out.printf("%-30s%-30s%n",
-                    e.getEntityNumber(), e.getTime());
-
-        }
-        System.out.println();
-        for(Part parttt: parts) {
-            System.out.printf("%-30s%-30s%-30s%-30s%n",
-                    parttt.getId(), parttt.getArrivalTime(), parttt.getInterArrivalTime(), parttt.getServiceTime());
-        }
-        System.out.println();
         return calendar;
     }
 
@@ -463,23 +430,3 @@ public class Simulator {
 
 }
 
-// for testing
-class Test {
-    public static void main(String[] args) {
-        Simulator simulator = new Simulator();
-        //simulator.simulateParts(40);
-        ArrayList<Event> eventArrayList = simulator.simulateMinutes(30);
-        //System.out.println( simulator.simulateParts(2));
-
-        for(Event e: eventArrayList){
-            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%-30s%n",
-                    e.getEventID(), e.getTime(), e.getEventType(), e.getNumberOfPartsInQueue(),
-                    e.getUtilization(), e.getTimesInQueue(), e.getPartInServiceTime(), e.getPartsProducedSoFar(),
-                    e.getNumberOfPartsThatPassedThroughTheQueueSoFar(), e.getWaitingTimeInQueueSoFar(),
-                    e.getLongestTimeSpentInQueueSoFar(), e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
-                    e.getLongestTimeInSystem(), e.getAreaUnderQueueLengthCurve(), e.getHighestLevelOfQ(),
-                    e.getAreaUnderServerBusy());
-
-        }
-    }
-}
