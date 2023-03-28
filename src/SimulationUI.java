@@ -187,12 +187,12 @@ public class SimulationUI extends JFrame implements ActionListener {
                 if (!eventArrayList.isEmpty()) {
                     Event lastEvent = eventArrayList.get(eventArrayList.size() - 1);
                     lastEvent.setTime(simTime);
-                    Object[] endValues = {"-", lastEvent.getTime(), "End", lastEvent.getNumberOfPartsInQueue(),
-                            lastEvent.getUtilization(), lastEvent.getTimesInQueue(), lastEvent.getPartInServiceTime(), lastEvent.getPartsProducedSoFar(),
-                            lastEvent.getNumberOfPartsThatPassedThroughTheQueueSoFar(), lastEvent.getWaitingTimeInQueueSoFar(),
-                            lastEvent.getLongestTimeSpentInQueueSoFar(), lastEvent.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
-                            lastEvent.getLongestTimeInSystem(), lastEvent.getAreaUnderQueueLengthCurve(), lastEvent.getHighestLevelOfQ(),
-                            lastEvent.getAreaUnderServerBusy()};
+                    Object[] endValues = {"-", "", "End", "",
+                            "", "", "", "",
+                            "", "",
+                            "", "",
+                            "", "", "",
+                            ""};
                     model.addRow(endValues);
                 }
 
