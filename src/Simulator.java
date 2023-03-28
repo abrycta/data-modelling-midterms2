@@ -1,3 +1,5 @@
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Simulator {
@@ -156,13 +158,19 @@ public class Simulator {
         return  eventArrayList.get(eventArrayList.size()-1).getUtilization();
     }
 
+    public double roundValue(double value){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+        String roundedValue = decimalFormat.format(value);
+        return Double.parseDouble(roundedValue);
+    }
 
     public ArrayList<Event> constructCalendar(ArrayList<Part> parts) {
 //        ArrayList<Part> parts = new ArrayList<>();
-//        Part partt = new Part(1,0,0,1);
-//        Part part1 = new Part(2,1,1,1);
-//        Part part2 = new Part(3,9,8,1);
-//        Part part3 = new Part(4,11,2,2);
+//        Part partt = new Part(1,0,0,7.05);
+//        Part part1 = new Part(2,9.07,9.07,11.37);
+//        Part part2 = new Part(3,15.95,6.88,10.94);
+//        Part part3 = new Part(4,29.28,13.33,9.49);
 //        Part part4 = new Part(5, 13, 2,2);
 //        Part part5 = new Part(6, 21, 8,2);
 //        Part part6 = new Part(7, 29, 8,1);
@@ -205,13 +213,9 @@ public class Simulator {
                 calendar.add(eventInService);
             } else {
                 if(eventInService.getTime() <= part.getArrivalTime()){
-                    departure.setTime(
-                            part.getArrivalTime() + part.getServiceTime()
-                    );;
+                    departure.setTime(roundValue(part.getArrivalTime() + part.getServiceTime()));
                 } else {
-                    departure.setTime(
-                            eventInService.getTime() + part.getServiceTime()
-                    );
+                    departure.setTime(roundValue(eventInService.getTime() + part.getServiceTime()));
                 }
                 departure.setEventType(2);
 
@@ -303,6 +307,10 @@ public class Simulator {
             if (partInServiceTime == 0){
                 longestTimeSpentInQueueSoFar = prevWQ;
             }
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+            String roundedValue = decimalFormat.format(longestTimeSpentInQueueSoFar);
+            longestTimeSpentInQueueSoFar = Double.parseDouble(roundedValue);
         }
         if(eventType == 1){
             longestTimeSpentInQueueSoFar = prevWQ;
@@ -319,6 +327,11 @@ public class Simulator {
             waitingTimeInQueueSoFar = WQ + prevWaitingTimeInQueueSoFar;
             if(partInServiceTime == 0)
                 waitingTimeInQueueSoFar = prevWaitingTimeInQueueSoFar;
+
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+            String roundedValue = decimalFormat.format(waitingTimeInQueueSoFar);
+            waitingTimeInQueueSoFar = Double.parseDouble(roundedValue);
         }
         if (eventType == 1){
             waitingTimeInQueueSoFar = prevWaitingTimeInQueueSoFar;
@@ -337,7 +350,7 @@ public class Simulator {
                     arrivalTime = event.getTime();
                 }
             }
-            return eventTime - arrivalTime;
+            return roundValue(eventTime - arrivalTime);
         }
         return prevTS;
     }
@@ -346,7 +359,7 @@ public class Simulator {
     // sigma TS
     public double calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(double prevSigmaTs, double TS, int eventType) {
         if (eventType == 2){
-           return prevSigmaTs + TS;
+           return roundValue(prevSigmaTs + TS);
         }
         return prevSigmaTs;
     }
@@ -358,7 +371,7 @@ public class Simulator {
         double prevNumOfPartsInQueue = getPrevNumOfPartsInQueue(eventArrayList);
         double prevAreaUnderCurve = getPrevAreaUnderCurve(eventArrayList);
         double areaUnderQueueLengthCurve = ((currentTime - prevTime) * (prevNumOfPartsInQueue - 0)) + prevAreaUnderCurve;
-        return areaUnderQueueLengthCurve;
+        return roundValue(areaUnderQueueLengthCurve);
     }
 
     public double calculateHighestLevelOfQ(ArrayList<Event> eventArrayList) {
@@ -377,14 +390,14 @@ public class Simulator {
         double prevUtil = getPrevUtil(eventArrayList);
         double prevAreaUnderServerBusy = getPrevAreaUnderServerBusy(eventArrayList);
         double areaUnderServerBusy = ((currentTime - prevTime) * (prevUtil - 0)) + prevAreaUnderServerBusy;
-        return areaUnderServerBusy;
+        return roundValue(areaUnderServerBusy);
     }
 
     /*
             FOR STATISTICS
      */
     public double averageTotalTimeInSystem(ArrayList<Event> eventArrayList) {
-        Event e = eventArrayList.get(eventArrayList.size() - 1);
+        Event e = new Event();
         double totalTime = e.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted();
         double totalPart = e.getPartsProducedSoFar();
         return totalTime/totalPart; // time per part
@@ -434,7 +447,7 @@ public class Simulator {
                 double currentInterArrivalTime = Randomizer.lookupInterArrivalTime();
                 parts.add(new Part(
                         getPrevPart(parts).getId() + 1,
-                        getPrevPart(parts).getArrivalTime() + currentInterArrivalTime,
+                        roundValue(getPrevPart(parts).getArrivalTime() + currentInterArrivalTime),
                         currentInterArrivalTime,
                         Randomizer.lookUpServiceTime()
 

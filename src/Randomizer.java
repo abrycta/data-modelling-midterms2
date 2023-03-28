@@ -1,3 +1,5 @@
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Randomizer {
@@ -5,23 +7,29 @@ public class Randomizer {
     private static final Random RAND = new Random();
 
     public static double lookupInterArrivalTime() {
-        double mean = 10.0;
-        double standardDeviation = 4.0;
-        int min = 1;
-        int max = 10;
+        double mean = 8.0;
+        double standardDeviation = 1.5;
         double randomValue = mean + RAND.nextGaussian() * standardDeviation;
-        randomValue = Math.max(min, Math.min(max, randomValue));
-        return Math.round(randomValue * 100.0) / 100.0;
+        while (randomValue < 1 || randomValue > 10){
+            randomValue = mean + RAND.nextGaussian() * standardDeviation;
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+        String roundedValue = decimalFormat.format(randomValue);
+        return Double.parseDouble(roundedValue);
     }
 
     public static double lookUpServiceTime() {
-        double mean = 10;
-        double standardDeviation = 4.0;
-        int min = 1;
-        int max = 8;
+        double mean = 5.0;
+        double standardDeviation = 1.5;
         double randomValue = mean + RAND.nextGaussian() * standardDeviation;
-        randomValue = Math.max(min, Math.min(max, randomValue));
-        return Math.round(randomValue * 100.0) / 100.0;
+        while (randomValue < 1 || randomValue > 10){
+            randomValue = mean + RAND.nextGaussian() * standardDeviation;
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+        String roundedValue = decimalFormat.format(randomValue);
+        return Double.parseDouble(roundedValue);
     }
     //test
     public static void main(String[] args) {
