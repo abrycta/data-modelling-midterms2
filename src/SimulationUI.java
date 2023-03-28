@@ -156,13 +156,24 @@ public class SimulationUI extends JFrame implements ActionListener {
                     // test for arrival time in service
                     // ignore the arrival events for entities 0, 1, 2
                     String arrivalTimeInService = String.valueOf(event.getPartInServiceTime());
-
                     if (event.getUtilization() == 0) {
                         arrivalTimeInService = "---";
                     }
 
-                    Object[] tableValues = {event.getEventID(), event.getTime(), eventType, event.getNumberOfPartsInQueue(),
-                            event.getUtilization(), event.getTimesInQueue(), arrivalTimeInService, event.getPartsProducedSoFar(),
+                    String eventID = String.valueOf(event.getEventID());
+                    if (event.getEventID() == 0) {
+                        eventID = "---";
+                    }
+
+                    String timesInQueue = String.valueOf(event.getTimesInQueue());
+                    if(event.getTimesInQueue().isEmpty()) {
+                        timesInQueue = "---";
+                    }
+
+
+
+                    Object[] tableValues = {eventID, event.getTime(), eventType, event.getNumberOfPartsInQueue(),
+                            event.getUtilization(),timesInQueue, arrivalTimeInService, event.getPartsProducedSoFar(),
                             event.getNumberOfPartsThatPassedThroughTheQueueSoFar(), event.getWaitingTimeInQueueSoFar(),
                             event.getLongestTimeSpentInQueueSoFar(), event.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
                             event.getLongestTimeInSystem(), event.getAreaUnderQueueLengthCurve(), event.getHighestLevelOfQ(),

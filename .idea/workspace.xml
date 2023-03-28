@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Minor fixes">
+    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Dashes when drill press is not in use">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NewSimulator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +101,7 @@
       <workItem from="1679856797807" duration="421000" />
       <workItem from="1679900418912" duration="2610000" />
       <workItem from="1680015374526" duration="455000" />
-      <workItem from="1680016517137" duration="2408000" />
+      <workItem from="1680016517137" duration="3228000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
@@ -168,7 +166,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679959350245</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Dashes when drill press is not in use">
+      <created>1680019005024</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680019005024</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Dashes when drill press is not in use">
+      <created>1680019208047</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680019208047</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +207,8 @@
     <MESSAGE value="Added statistics, init, and end rows" />
     <MESSAGE value="Minor fixes" />
     <MESSAGE value="Fixed randomizer.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed randomizer.java" />
+    <MESSAGE value="Dashes when drill press is not in use" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dashes when drill press is not in use" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
