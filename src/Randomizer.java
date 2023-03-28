@@ -7,10 +7,10 @@ public class Randomizer {
     private static final Random RAND = new Random();
 
     public static double lookupInterArrivalTime() {
-        double mean = 8.0;
-        double standardDeviation = 1.5;
+        double mean = 10.0;
+        double standardDeviation = 5.5;
         double randomValue = mean + RAND.nextGaussian() * standardDeviation;
-        while (randomValue < 1 || randomValue > 10){
+        while (randomValue < 1 || randomValue > 15){
             randomValue = mean + RAND.nextGaussian() * standardDeviation;
         }
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -20,10 +20,10 @@ public class Randomizer {
     }
 
     public static double lookUpServiceTime() {
-        double mean = 5.0;
+        double mean = 8.0;
         double standardDeviation = 1.5;
         double randomValue = mean + RAND.nextGaussian() * standardDeviation;
-        while (randomValue < 1 || randomValue > 10){
+        while (randomValue < 1 || randomValue > 15){
             randomValue = mean + RAND.nextGaussian() * standardDeviation;
         }
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
