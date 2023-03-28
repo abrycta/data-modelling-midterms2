@@ -55,8 +55,8 @@ public class SimulationUI extends JFrame implements ActionListener {
         inputPanel.add(runButton);
         inputPanel.add(statButton);
 
-        String[] columnNames = {"Entity No.", "Time t", "Event type", "Q(t)", "B(t)", "Arrival time in queue",
-                "Arrival time in service","P", "N", "ΣWQ", "WQ*", "ΣTS", "TS*", "∫Q", "Q*", "∫B"};
+        String[] columnNames = {"Entity No.", "Time t", "Event type", "Q(t)", "B(t)", "In Queue (Arrival Time)",
+                "In Service (Arrival Time)","P", "N", "ΣWQ", "WQ*", "ΣTS", "TS*", "∫Q", "Q*", "∫B"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         resultTable = new JTable(model);
         centerTable(resultTable);
@@ -141,6 +141,7 @@ public class SimulationUI extends JFrame implements ActionListener {
 //                model.addRow(initValues);
 
                 int counter = 0;
+
                 for (Event event : eventArrayList) {
                     if (counter == 0) {
                         eventType = "Init";
@@ -151,8 +152,16 @@ public class SimulationUI extends JFrame implements ActionListener {
                             eventType = "Departure";
                         }
                     }
+
+                    // test for arrival time in service
+                    // ignore the arrival events for entities 0, 1, 2
+                    String arrivalTimeInService = "";
+                    if (event.getUtilization() == 0) {
+                        arrivalTimeInService = "---";
+                    } else arrivalTimeInService = String.valueOf(event.getPartInServiceTime());
+
                     Object[] tableValues = {event.getEventID(), event.getTime(), eventType, event.getNumberOfPartsInQueue(),
-                            event.getUtilization(), event.getTimesInQueue(), event.getPartInServiceTime(), event.getPartsProducedSoFar(),
+                            event.getUtilization(), event.getTimesInQueue(), arrivalTimeInService, event.getPartsProducedSoFar(),
                             event.getNumberOfPartsThatPassedThroughTheQueueSoFar(), event.getWaitingTimeInQueueSoFar(),
                             event.getLongestTimeSpentInQueueSoFar(), event.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
                             event.getLongestTimeInSystem(), event.getAreaUnderQueueLengthCurve(), event.getHighestLevelOfQ(),
