@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Dashes when drill press is not in use">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
     </list>
