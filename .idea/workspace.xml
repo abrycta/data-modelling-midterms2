@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="Dashes when drill press is not in use">
+    <list default="true" id="dbeb830b-88d1-4fd9-9ef8-2f7467607b25" name="Changes" comment="change eventtype to string in gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimulationUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,29 +26,15 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectId" id="2NEOEaQcKfDky2k6zabNqBuvuVm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jade/IdeaProjects/data-modelling-midterms2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RunManager" selected="Application.SimulationUI">
     <configuration name="Randomizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Randomizer" />
@@ -64,13 +50,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Test" />
-      <module name="data-modelling-midterms2" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test" />
       <module name="data-modelling-midterms2" />
@@ -81,9 +60,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.SimulationUI" />
-        <item itemvalue="Application.Randomizer" />
-        <item itemvalue="Application.Test (1)" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Randomizer" />
       </list>
     </recent_temporary>
   </component>
@@ -98,10 +76,6 @@
       <workItem from="1679758533971" duration="11334000" />
       <workItem from="1679805565502" duration="418000" />
       <workItem from="1679820774735" duration="4613000" />
-      <workItem from="1679856797807" duration="421000" />
-      <workItem from="1679900418912" duration="2610000" />
-      <workItem from="1680015374526" duration="455000" />
-      <workItem from="1680016517137" duration="3228000" />
     </task>
     <task id="LOCAL-00001" summary="Parts simulation">
       <created>1679762534337</created>
@@ -138,49 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679826955058</updated>
     </task>
-    <task id="LOCAL-00006" summary="Added UI">
-      <created>1679857171163</created>
+    <task id="LOCAL-00006" summary="Fixed Randomizer">
+      <created>1679963629448</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1679857171163</updated>
+      <updated>1679963629448</updated>
     </task>
-    <task id="LOCAL-00007" summary="Added statistics, init, and end rows">
-      <created>1679941377481</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1679941377482</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Minor fixes">
-      <created>1679942416380</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1679942416380</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Fixed randomizer.java">
-      <created>1679959350245</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1679959350245</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Dashes when drill press is not in use">
-      <created>1680019005024</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1680019005024</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Dashes when drill press is not in use">
-      <created>1680019208047</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1680019208047</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +135,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Parts simulation" />
@@ -203,27 +143,26 @@
     <MESSAGE value="Time, entity, event type" />
     <MESSAGE value="Fixes for Time, entity, event type" />
     <MESSAGE value="Fix OOB for parts simulator" />
-    <MESSAGE value="Added UI" />
-    <MESSAGE value="Added statistics, init, and end rows" />
-    <MESSAGE value="Minor fixes" />
-    <MESSAGE value="Fixed randomizer.java" />
-    <MESSAGE value="Dashes when drill press is not in use" />
-    <option name="LAST_COMMIT_MESSAGE" value="Dashes when drill press is not in use" />
+    <MESSAGE value="Fixed Randomizer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Randomizer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>372</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Simulator.java</url>
-          <line>187</line>
-          <option name="timeStamp" value="28" />
+          <line>238</line>
+          <properties class="Simulator" method="calculatePartInServiceTime">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="eventArrayList.get(0)" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

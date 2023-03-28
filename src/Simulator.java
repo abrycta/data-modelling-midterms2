@@ -85,7 +85,7 @@ public class Simulator {
 
                 event.setTimesInQueue(calculateTimesInQueue(eventIDsInQueue, eventArrayList, event));
 
-                event.setPartInServiceTime(calculatePartInServiceTime(eventIDsInQueue, eventArrayList));
+                event.setPartInServiceTime(calculatePartInServiceTime(eventIDsInQueue, eventArrayList, event));
 
                 // Statistical Accumulators
                 event.setPartsProducedSoFar(eventIdsDeparted.size()); // P
@@ -236,14 +236,23 @@ public class Simulator {
     }
 
     // returns the service time of the event in front of the queue
-    // retain value if event is arrival
-    public double calculatePartInServiceTime(ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList) {
+    public double calculatePartInServiceTime(ArrayList<Integer> eventIDsInQueue, ArrayList<Event> eventArrayList, Event presentEvent) {
         double arrivalTime = 0;
-        for (Event event: eventArrayList){
-            if (!eventIDsInQueue.isEmpty()){
+        if (eventIDsInQueue.size() > 1) {
+            for (Event event : eventArrayList) {
                 if (eventIDsInQueue.get(0) == event.getEventID())
                     arrivalTime = event.getTime();
             }
+        } else if (presentEvent.getEventType() == 2) {
+            if(eventIDsInQueue.isEmpty()){
+                return 0;
+            }
+            for (Event event : eventArrayList) {
+                if (eventIDsInQueue.get(0) == event.getEventID())
+                    arrivalTime = event.getTime();
+            }
+        } else {
+            arrivalTime = presentEvent.getTime();
         }
 
         return arrivalTime;
