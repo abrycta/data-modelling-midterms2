@@ -120,7 +120,7 @@ public class SimulationUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // empty table
         clearTable(resultTable);
-
+        String eventType = null;
         Simulator simulator = new Simulator();
         ArrayList<Event> eventArrayList;
         if (e.getSource() == runButton) {
@@ -138,7 +138,12 @@ public class SimulationUI extends JFrame implements ActionListener {
 
                 // set the rows
                 for (Event event : eventArrayList) {
-                    Object[] tableValues = {event.getEventID(), event.getTime(), event.getEventType(), event.getNumberOfPartsInQueue(),
+                    if (event.getEventType() == 1){
+                        eventType = "Arrival";
+                    } else if (event.getEventType() == 2){
+                        eventType = "Departure";
+                    }
+                    Object[] tableValues = {event.getEventID(), event.getTime(), eventType, event.getNumberOfPartsInQueue(),
                             event.getUtilization(), event.getTimesInQueue(), event.getPartInServiceTime(), event.getPartsProducedSoFar(),
                             event.getNumberOfPartsThatPassedThroughTheQueueSoFar(), event.getWaitingTimeInQueueSoFar(),
                             event.getLongestTimeSpentInQueueSoFar(), event.getTotalTimeSpentInSystemByAllPartsThatHaveDeparted(),
