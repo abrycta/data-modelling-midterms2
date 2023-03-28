@@ -64,8 +64,6 @@ public class SimulationUI extends JFrame implements ActionListener {
         resultTable.setShowVerticalLines(false);
         resultTable.setFillsViewportHeight(true);
         resultTable.getTableHeader().setReorderingAllowed(false);
-        resultTable.getTableHeader().setBackground(Color.BLACK);
-        resultTable.getTableHeader().setForeground(Color.BLACK);
         resultTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         JTableHeader header = resultTable.getTableHeader();
         header.setPreferredSize(new Dimension(header.getWidth(), 30));
