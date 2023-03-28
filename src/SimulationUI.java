@@ -215,7 +215,7 @@ public class SimulationUI extends JFrame implements ActionListener {
 
     public void startStatFrame() {
         statFrame = new JFrame("Statistics");
-        JPanel statPanel = new JPanel(new GridLayout(1, 1));
+        JPanel statPanel = new JPanel(new GridLayout(2, 1));
         DecimalFormat df2 = new DecimalFormat("#.##");
         String[] columnNames = {"Statistics", "Value"};
         Object[][] data = {
@@ -243,14 +243,14 @@ public class SimulationUI extends JFrame implements ActionListener {
                 "The average total time in system is " + df2.format(avgTotalSystemTime) + " minutes per part." + "\n" +
                 "The average waiting time in queue is " + df2.format(avgWaitingQueueTime) + " minutes per part." + "\n" +
                 "The time average number in queue is " + df2.format(avgQueueTimeNumber) + " minutes per part." + "\n" +
-                "The drill press utilization is " + df2.format(drillPressUtil) + "." + "\n" ;
+                "The drill press utilization is " + df2.format(drillPressUtil * 100) + "." + "%\n" ;
 
         interpretationField.setText(interpretationString);
         interpretationPanel.add(interpretationField);
         statPanel.add(interpretationPanel);
 
         statFrame.add(statPanel);
-        statFrame.setSize(1300, 130);
+        statFrame.setSize(new Dimension(500, 250));
         statFrame.setLocationRelativeTo(null);
         statFrame.setVisible(false);
         statWindowStarted = true;
