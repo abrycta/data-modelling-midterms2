@@ -92,19 +92,21 @@ public class Simulator {
 
                 event.setNumberOfPartsThatPassedThroughTheQueueSoFar(eventIdsPassedQueue.size()); // N
 
-                event.setLongestTimeSpentInQueueSoFar(calculateLongestTimeSpentInQueueSoFar(event.getPartInServiceTime(),
+                event.setLongestTimeSpentInQueueSoFar(getLongestTimeSpentInQueueSoFar(event.getPartInServiceTime(),
                         event.getTime(), event.getEventType(), getPrevWQ(eventArrayList)));// WQ*
 
                 event.setWaitingTimeInQueueSoFar(calculateWaitingTimeInQueueSoFar(event.getEventType(),
-                        getPrevWaitingTimeQueueSoFar(eventArrayList),event.getLongestTimeSpentInQueueSoFar(),
+                        getPrevWaitingTimeQueueSoFar(eventArrayList),calculateTimeSpentInQueueSoFar(event.getPartInServiceTime(),
+                                event.getTime(), event.getEventType(), getPrevWQ(eventArrayList)),
                         event.getPartInServiceTime())); // ΣWQ
 
-                event.setLongestTimeInSystem(calculateLongestTimeInSystem(eventArrayList, event.getEventType(),
+                event.setLongestTimeInSystem(getLongestTimeInSystem(eventArrayList, event.getEventType(),
                         event.getEventID(), getPrevTS(eventArrayList), event.getTime())); //TS*
 
                 event.setTotalTimeSpentInSystemByAllPartsThatHaveDeparted(
                         calculateTotalTimeSpentInSystemByAllPartsThatHaveDeparted(getPrevSigmaTS(eventArrayList),
-                                event.getLongestTimeInSystem(), event.getEventType())); // ΣTS
+                                calculateTimeInSystem(eventArrayList, event.getEventType(),
+                                        event.getEventID(), getPrevTS(eventArrayList), event.getTime()), event.getEventType())); // ΣTS
 
                 event.setAreaUnderQueueLengthCurve(calculateAreaUnderQueueLengthCurve(eventArrayList, event)); // ∫Q
                 event.setHighestLevelOfQ(calculateHighestLevelOfQ(eventArrayList)); // Q*
@@ -187,10 +189,6 @@ public class Simulator {
             if (part.getId() == 1) {
                 departure.setEventType(2);
                 departure.setTime(part.getArrivalTime() + part.getServiceTime());
-                departure.setEntityNumber(part.getId());
-                eventInService = departure;
-                departureEvents.add(departure);
-                calendar.add(eventInService);
             } else {
                 if(eventInService.getTime() <= part.getArrivalTime()){
                     departure.setTime(roundValue(part.getArrivalTime() + part.getServiceTime()));
@@ -199,11 +197,11 @@ public class Simulator {
                 }
                 departure.setEventType(2);
 
-                departure.setEntityNumber(part.getId());
-                eventInService = departure;
-                departureEvents.add(departure);
-                calendar.add(eventInService);
             }
+            departure.setEntityNumber(part.getId());
+            eventInService = departure;
+            departureEvents.add(departure);
+            calendar.add(eventInService);
         }
         // sort list by time
         calendar.sort(Comparator.comparing(Event::getTime));
@@ -275,8 +273,8 @@ public class Simulator {
     */
 
     // retain values if event type is arrival
-    // WQ*
-    public double calculateLongestTimeSpentInQueueSoFar(double partInServiceTime, double eventTime, int eventType, double prevWQ) {
+    // returns waiting time in system
+    public double calculateTimeSpentInQueueSoFar(double partInServiceTime, double eventTime, int eventType, double prevWQ) {
         double longestTimeSpentInQueueSoFar = 0;
         if(eventType == 2){
             longestTimeSpentInQueueSoFar = eventTime - partInServiceTime;
@@ -294,7 +292,7 @@ public class Simulator {
         return longestTimeSpentInQueueSoFar;
     }
 
-    // retain values f event is arrival
+    // retain values if event is arrival
     // sigma WQ
     public double calculateWaitingTimeInQueueSoFar(int eventType, double prevWaitingTimeInQueueSoFar, double WQ,
                                                    double partInServiceTime) {
@@ -303,7 +301,6 @@ public class Simulator {
             waitingTimeInQueueSoFar = WQ + prevWaitingTimeInQueueSoFar;
             if(partInServiceTime == 0)
                 waitingTimeInQueueSoFar = prevWaitingTimeInQueueSoFar;
-
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
             String roundedValue = decimalFormat.format(waitingTimeInQueueSoFar);
@@ -315,9 +312,32 @@ public class Simulator {
         return waitingTimeInQueueSoFar;
     }
 
+    // retain values if event is arrival
+    // WQ*
+    public double getLongestTimeSpentInQueueSoFar(double partInServiceTime, double eventTime, int eventType, double prevWQ){
+        double longestTimeSpentInQueue = 0;
+        if(eventType == 2){
+            longestTimeSpentInQueue = eventTime - partInServiceTime;
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+            String roundedValue = decimalFormat.format(longestTimeSpentInQueue);
+            longestTimeSpentInQueue = Double.parseDouble(roundedValue);
+            if (longestTimeSpentInQueue < prevWQ){
+                longestTimeSpentInQueue = prevWQ;
+            }
+            if (partInServiceTime == 0){
+                longestTimeSpentInQueue = prevWQ;
+            }
+        }
+        if(eventType == 1){
+            longestTimeSpentInQueue = prevWQ;
+        }
+        return longestTimeSpentInQueue;
+    }
+
     // retain values if event type is arrival
-    // TS*
-    public double calculateLongestTimeInSystem(ArrayList<Event> eventArrayList, int eventType, int eventID,
+    // returns time in system
+    public double calculateTimeInSystem(ArrayList<Event> eventArrayList, int eventType, int eventID,
                                                double prevTS, double eventTime) {
         double arrivalTime = 0;
         if (eventType == 2) {
@@ -327,6 +347,27 @@ public class Simulator {
                 }
             }
             return roundValue(eventTime - arrivalTime);
+        }
+        return prevTS;
+    }
+
+    // retain values if event type is arrival
+    // TS*
+    public double getLongestTimeInSystem(ArrayList<Event> eventArrayList, int eventType, int eventID,
+                                               double prevTS, double eventTime) {
+        double longestTimeInSystem = 0;
+        double arrivalTime = 0;
+        if (eventType == 2) {
+            for (Event event : eventArrayList) {
+                if (eventID == event.getEventID()) {
+                    arrivalTime = event.getTime();
+                }
+            }
+            longestTimeInSystem = roundValue(eventTime - arrivalTime);
+            if (longestTimeInSystem < prevTS) {
+                longestTimeInSystem = prevTS;
+            }
+            return longestTimeInSystem;
         }
         return prevTS;
     }
