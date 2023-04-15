@@ -20,6 +20,8 @@ public class SimulationUI extends JFrame implements ActionListener {
     private double avgWaitingQueueTime = 0;
     private double avgQueueTimeNumber = 0;
     private double drillPressUtil = 0;
+    private double probToWaitInQueue = 0;
+    private String probToWaitInQueueString = "";
 
     public SimulationUI() {
         setTitle("Simulation UI");
@@ -204,7 +206,8 @@ public class SimulationUI extends JFrame implements ActionListener {
                 avgWaitingQueueTime = simulator.averageWaitingTimeInQueue(eventArrayList);
                 avgQueueTimeNumber = simulator.timeAverageNumberInQueue(eventArrayList);
                 drillPressUtil = simulator.drillPressUtilization(eventArrayList);
-
+                probToWaitInQueue = simulator.computeProbabilityEntityWillWaitInQueue(eventArrayList);
+                probToWaitInQueueString = String.valueOf(probToWaitInQueue) + "%";
                 runButtonPressed = true;
                 startStatFrame();
             } catch (NumberFormatException ex) {
@@ -222,7 +225,8 @@ public class SimulationUI extends JFrame implements ActionListener {
                 {"Average Total Time in System", ""},
                 {"Average Waiting Time in Queue", ""},
                 {"Time Average Number in Queue", ""},
-                {"Drill Press Utilization", ""}
+                {"Drill Press Utilization", ""},
+                {"Probability of Entity to Wait in Queue", ""}
         };
         DefaultTableModel tableModel = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(tableModel);
@@ -232,6 +236,7 @@ public class SimulationUI extends JFrame implements ActionListener {
         tableModel.setValueAt(avgWaitingQueueTime, 1, 1); // Average Waiting Time in Queue
         tableModel.setValueAt(avgQueueTimeNumber, 2, 1); // Time Average Number in Queue
         tableModel.setValueAt(drillPressUtil, 3, 1); // Drill Press Utilization
+        tableModel.setValueAt(probToWaitInQueueString, 4, 1);
 
         JScrollPane scrollPane = new JScrollPane(table);
         statPanel.add(scrollPane);
@@ -243,7 +248,8 @@ public class SimulationUI extends JFrame implements ActionListener {
                 "The average total time in system is " + df2.format(avgTotalSystemTime) + " minutes per part." + "\n" +
                 "The average waiting time in queue is " + df2.format(avgWaitingQueueTime) + " minutes per part." + "\n" +
                 "The time average number in queue is " + df2.format(avgQueueTimeNumber) + " minutes per part." + "\n" +
-                "The drill press utilization is " + df2.format(drillPressUtil * 100) + "." + "%\n" ;
+                "The drill press utilization is " + df2.format(drillPressUtil * 100) + "." + "%\n" +
+                "The probability of an entity to wait in queue is " + probToWaitInQueueString;
 
         interpretationField.setText(interpretationString);
         interpretationPanel.add(interpretationField);

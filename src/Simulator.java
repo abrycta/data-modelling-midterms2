@@ -478,5 +478,26 @@ public class Simulator {
         return parts;
     }
 
+    public double computeProbabilityEntityWillWaitInQueue(List<Event> calendar) {
+        // number of parts that waited / total parts
+
+        // subtract departure time of previous entity and next entity
+        double waitingParts = 0;
+        for(Event event : calendar) {
+            if (event.getEventType() == 1 && event.getNumberOfPartsInQueue() != 0)
+                waitingParts ++;
+        }
+
+        double calendarSize = 0;
+        for (Event event : calendar) {
+            if(event.getEventType() == 1) {
+                calendarSize++;
+            }
+        }
+
+        if (waitingParts == 0) return waitingParts;
+        else return waitingParts / calendarSize * 100;
+    }
+
 }
 
